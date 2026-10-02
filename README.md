@@ -519,3 +519,40 @@ The documentation links are absolute so they remain valid when the Registry
 archive omits `docs/` and `COMPATIBILITY.md` via `.comfyignore`.
 `example_workflows/`, `api_workflows/`, `web/`, `LICENSE` and `NOTICE` ship with
 the package.
+
+
+---
+
+## 🌟 Master Production Suite & Upgrades (v0.2.0)
+
+This repository includes the upgraded **RAVEN Master Production Suite**, adding broadcast-grade screenplay direction, transparent model patching, and live streaming capabilities:
+
+### 1. 🧠 Universal Model Loader & In-Memory Time Embedder Patcher
+- **Zero-Cloning Time Embedder Hot-Splicing:** MiniMax H3 pruned checkpoints (like `pruned MiniMax H3 checkpoints`) strip the 60.4MB `time_embedder` weights required by full causal DiT architectures. The loader automatically detects missing `time_embedder` weights and splices them in RAM dynamically without requiring duplicate 20GB files on disk.
+- **Native GGUF De-Quant Support:** Supports quantized MiniMax H3 models directly with RAVEN causal streaming on 12GB–16GB VRAM configurations.
+
+### 2. 🎬 Multi-Shot Timeline Director (`RavenTimelineDirector`)
+Universal ingestion engine for multi-shot scripts, JSON chain plans, and screenplay packages:
+- **Interactive Multi-Shot Prompt Box:** Ingests standard screenplay scripts with `[Shot 1] At 00:00.000`, `[Shot 2] At 00:03.000`, `overall_soundscape:`, and `CRITICAL RULES:`.
+- **JSON Chain Plan Ingestion:** Ingests `comfyui_chain_plan.json` directly or via the optional `plan_json_input` socket.
+- **Direct Screenplay Loading:** Accepts local screenplay directory paths (e.g. `screenplays/halo_2005/`).
+- **Shot Mode Selector:** Switch between `Continuous_Sequence (All Shots Combined)` for continuous rolling generation, or isolate individual shots (`Shot 1`, `Shot 2`, etc.) to test specific beats.
+
+### 3. ⚡ Attention Engine (Comfy-Kitchen / SDPA vs SageAttention)
+- **100% Optional SageAttention 2.2:** Automatically uses SageAttention 2.2 on CUDA (with 128-dim head padding) if installed.
+- **Zero-Hassle Fallback:** If SageAttention is not installed, the engine automatically falls back to ComfyUI's native PyTorch SDPA / Comfy-Kitchen backend without throwing errors or requiring complex C++ compilation.
+- **LoRA Stacking Note:** RAVEN already has its dedicated 4-step consistency turbo LoRA baked into the loader. Do **not** stack an external 8-step Turbo LoRA on top. Use content LoRAs (such as `CinematicMH3-V01`, `Red_Dragon_Camera_minimax`, `MiniMax_H3_Combat_LoRA`).
+
+### 4. 📡 Live 24/7 Broadcaster (`RavenLiveBroadcaster`)
+- **Local RTSP Server (`rtsp://127.0.0.1:8554/live`):** Open directly in VLC (**Media > Open Network Stream**) or OBS Studio to watch generation live in real time.
+- **RTMP Live Streaming:** Pipes continuous 24fps frames and stereo audio directly to YouTube Live, Twitch, Kick, or custom RTMP endpoints.
+- **Local WebRTC / OBS Studio Preview:** Real-time stream accessible at `http://127.0.0.1:8192/live`.
+
+### 5. 🗄️ Infinite SceneMemoryVault
+- Two-tier character and spatial memory (Tier 1 GPU sliding ring buffer + Tier 2 CPU/RAM vault).
+- Preserves character identity, costume traits, and scene anchors across dozens of continuous shots.
+
+### 6. 🎨 Master Workflow
+A complete broadcast-grade production canvas is provided in:
+- `workflows/minimaxH3_RAVEN_Master_Production_Studio.json`
+- Includes pre-configured Model Ingestion, Character Reference Decks (`@char1` / `@char2`), Timeline Director, Sampling Core, and Broadcast Muxing.

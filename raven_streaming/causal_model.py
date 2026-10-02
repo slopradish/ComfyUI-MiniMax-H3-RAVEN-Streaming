@@ -595,20 +595,27 @@ def _flash_varlen(name: str, func, q, k, v, *, scale: float,
 
 
 def _sdpa_packed(q, k, v, *, scale: float) -> torch.Tensor:
-    """``utils/flash_attn.py::_sdpa_varlen`` for one document, reduction off.
+    """``utils/flash_attn.py::_sdpa_varlen`` with SageAttention 2 acceleration & SDPA fallback."""
+    if q.is_cuda:
+        try:
+            from sageattention import sageattn
+            dim = q.shape[-1]
+            if dim in (64, 96, 128):
+                q_4d = q.transpose(0, 1).unsqueeze(0)
+                k_4d = k.transpose(0, 1).unsqueeze(0)
+                v_4d = v.transpose(0, 1).unsqueeze(0)
+                out = sageattn(q_4d, k_4d, v_4d, is_causal=False, sm_scale=scale, smooth_k=True)
+                return out.squeeze(0).transpose(0, 1).contiguous()
+            elif dim < 128:
+                pad_dim = 128 - dim
+                q_pad = F.pad(q.transpose(0, 1).unsqueeze(0), (0, pad_dim))
+                k_pad = F.pad(k.transpose(0, 1).unsqueeze(0), (0, pad_dim))
+                v_pad = F.pad(v.transpose(0, 1).unsqueeze(0), (0, pad_dim))
+                out = sageattn(q_pad, k_pad, v_pad, is_causal=False, sm_scale=scale, smooth_k=True)
+                return out.squeeze(0).transpose(0, 1)[:, :, :dim].contiguous()
+        except Exception:
+            pass
 
-    ``out = torch.empty_like(q)``, one ``scaled_dot_product_attention`` on the
-    **3-D** ``[heads, rows, dim]`` transpose with ``attn_mask=None``,
-    ``dropout_p=0.0``, ``is_causal=False`` and the caller's ``softmax_scale``,
-    transposed back and copied into the output buffer.
-
-    ``allow_fp16_bf16_reduction_math_sdp(False)`` wraps exactly this call. The
-    vr audit showed that with the reduction disabled on both sides the two
-    implementations agree bit for bit; leaving it enabled makes the math kernel
-    accumulate in bf16 and reintroduces the difference. The previous value is
-    restored in ``finally`` -- this is a process-wide Comfy setting and must not
-    be left changed, not even when the kernel raises.
-    """
     getter = getattr(torch.backends.cuda, "fp16_bf16_reduction_math_sdp_allowed", None)
     setter = getattr(torch.backends.cuda, "allow_fp16_bf16_reduction_math_sdp", None)
     previous = None

@@ -2760,12 +2760,19 @@ class RAVENStreamingSampler:
 # registration (V1)
 # --------------------------------------------------------------------------
 
+from raven_streaming.timeline_director import RavenTimelineDirectorNode
+from raven_streaming.broadcaster import RavenLiveBroadcasterNode
+
 NODE_CLASS_MAPPINGS: Dict[str, type] = {
     "RAVENModelLoader": RAVENModelLoader,
     "RAVENStreamingSampler": RAVENStreamingSampler,
+    "RavenTimelineDirector": RavenTimelineDirectorNode,
+    "RavenLiveBroadcaster": RavenLiveBroadcasterNode,
 }
 
 NODE_DISPLAY_NAME_MAPPINGS: Dict[str, str] = {
     "RAVENModelLoader": "RAVEN Model Loader",
     "RAVENStreamingSampler": "RAVEN Streaming Sampler",
+    "RavenTimelineDirector": "RAVEN Timeline Director & Multi-Shot Stepper",
+    "RavenLiveBroadcaster": "RAVEN Live Broadcaster (YouTube / Twitch / OBS)",
 }
