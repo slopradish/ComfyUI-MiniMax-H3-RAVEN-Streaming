@@ -32,7 +32,7 @@
         "Node name for S&R": "RAVENModelLoader"
       },
       "widgets_values": [
-        "minimax_h3_fl2va_bf16.safetensors",
+        "MiniMax-H3-FL2VA-Q4_K_M.gguf",
         "minimax_h3_raven_streaming_lora_4nfe_preview.safetensors",
         "default"
       ],
@@ -446,21 +446,33 @@
           ]
         },
         {
-          "name": "overall_soundscape",
+          "name": "subject_definitions",
           "type": "STRING",
           "slot_index": 1,
           "links": []
         },
         {
+          "name": "overall_soundscape",
+          "type": "STRING",
+          "slot_index": 2,
+          "links": []
+        },
+        {
+          "name": "detailed_description",
+          "type": "STRING",
+          "slot_index": 3,
+          "links": []
+        },
+        {
           "name": "total_shots",
           "type": "INT",
-          "slot_index": 2,
+          "slot_index": 4,
           "links": []
         },
         {
           "name": "timeline_summary",
           "type": "STRING",
-          "slot_index": 3,
+          "slot_index": 5,
           "links": []
         }
       ],
@@ -468,7 +480,7 @@
         "Node name for S&R": "RavenTimelineDirector"
       },
       "widgets_values": [
-        "Cinematic style, dramatic close-up framing, intimate atmosphere. A continuous sequence.\n\nsubject_definitions: <LEAD> is the focal subject in high-definition attire.\n\n[Shot 1] At 00:00.000, Camera opens on an intimate establishing shot with warm tungsten volumetric backlight...\n\n[Shot 2] At 00:03.000, Smooth tracking push-in as the character turns with intense micro-acting focus...\n\noverall_soundscape: Intimate interior room tone RT60=0.35s, soft fabric rustle, warm low-frequency 45Hz sub-bass presence, crisp clear dialogue without muffling.\n\nCRITICAL RULES:\n- Consistent facial identity throughout.\n- Visible lip-sync phoneme articulation.",
+        "subject_definitions: <LEAD_A> is the focal protagonist in cinematic attire visible in @char1 and <LEAD_B> is the secondary lead visible in @char2.\n\nsummary: [reference generation] The target sequence captures an intense dramatic exchange between two leads.\n\nretention_analysis: <LEAD_A> (present throughout): fully_preserved. <LEAD_B> (present throughout): fully_preserved.\n\n[Shot 1] At 00:00.000, detailed_description: [0.00s-3.13s] Act I (Spatial Framing & Atmosphere): Camera opens on an intimate establishing medium shot with volumetric tungsten rim lighting catching ambient atmospheric dust...\n\n[Shot 2] At 00:03.000, detailed_description: [3.13s-6.27s] Act II (Physical Choreography & Quoted Dialogue): Smooth tracking push-in as <LEAD_A> steps closer with intense micro-acting focus, saying: \"Are you sure about this?\" with visible phoneme lip-sync...\n\ncamera_movement: Slow steadycam push-in transitioning to a gentle orbital arc, 35mm anamorphic prime lens at T1.5 with shallow depth of field.\n\nlighting_and_atmosphere: High-contrast chiaroscuro lighting, deep shadow rolloff, natural cinematic lens flare.\n\noverall_soundscape: Intimate interior room tone RT60=0.35s, soft fabric rustle, warm low-frequency 45Hz sub-bass presence, crisp clear dialogue without muffling.\n\nnon_diegetic_music: N/A\n\nCRITICAL RULES:\n- Consistent facial identity and wardrobe throughout.\n- Precise visible lip-sync phoneme articulation and natural jaw cadence.",
         "Continuous_Sequence (All Shots Combined)",
         true
       ],
@@ -848,7 +860,8 @@
       "outputs": [],
       "properties": {},
       "widgets_values": [
-        "MINIMAX H3 RAVEN MASTER PRODUCTION STUDIO \u2014 OPERATIONAL GUIDE\n\n1. \ud83c\udfac HOW TIMELINE DIRECTOR INGESTS (Prompt Box vs JSON vs Screenplay Files):\n   \u2022 Interactive Prompt Box: Type or paste multi-shot scripts directly with [Shot 1], [Shot 2], etc.\n   \u2022 JSON Ingestion: Paste comfyui_chain_plan.json or connect plan_json_input \u2014 it auto-detects JSON and parses shots instantly.\n   \u2022 File Path Ingestion: Type a local screenplay path (e.g. 'screenplays/halo_2005/') and it auto-loads scenes!\n   \u2022 Shot Mode Dropdown: Choose 'Continuous_Sequence (All Shots Combined)' for seamless streaming, or pick 'Shot 1', 'Shot 2' to test individual beats.\n\n2. \ud83e\udde0 ATTENTION ENGINE (Comfy-Kitchen / SDPA vs SageAttention):\n   \u2022 SageAttention 2.2 is 100% OPTIONAL: If SageAttention is not installed, RAVEN automatically falls back to ComfyUI's native PyTorch SDPA / Comfy-Kitchen backend without errors.\n   \u2022 Nobody needs to deal with tricky C++ compiler hassles if they prefer native ComfyUI attention.\n\n3. \u26a1 LoRA RULES & WHY NO TURBO LoRA:\n   \u2022 RAVEN already has its own dedicated 4-step consistency turbo LoRA baked directly into the model loader at strength 1.0!\n   \u2022 NEVER stack an 8-step Turbo LoRA on top: two different turbo schedulers will clash and distort timesteps.\n   \u2022 Content LoRAs work great: 35mm Cinema (CinematicMH3-V01), Red Dragon Camera, Combat LoRA, Realism LoRA.\n         ],
+        "MINIMAX H3 RAVEN MASTER PRODUCTION STUDIO \u2014 OPERATIONAL GUIDE\n\n1. \ud83c\udfac HOW TIMELINE DIRECTOR INGESTS (Prompt Box vs JSON vs Screenplay Files):\n   \u2022 Interactive Prompt Box: Type or paste multi-shot scripts directly with [Shot 1], [Shot 2], etc.\n   \u2022 JSON Ingestion: Paste comfyui_chain_plan.json or connect plan_json_input \u2014 it auto-detects JSON and parses shots instantly.\n   \u2022 File Path Ingestion: Type a local screenplay path (e.g. 'screenplays/halo_2005/') and it auto-loads scenes!\n   \u2022 Shot Mode Dropdown: Choose 'Continuous_Sequence (All Shots Combined)' for seamless streaming, or pick 'Shot 1', 'Shot 2' to test individual beats.\n\n2. \ud83e\udde0 ATTENTION ENGINE (Comfy-Kitchen / SDPA vs SageAttention):\n   \u2022 SageAttention 2.2 is 100% OPTIONAL: If SageAttention is not installed, RAVEN automatically falls back to ComfyUI's native PyTorch SDPA / Comfy-Kitchen backend without errors.\n   \u2022 Nobody needs to deal with tricky C++ compiler hassles if they prefer native ComfyUI attention.\n\n3. \u26a1 LoRA RULES & WHY NO TURBO LoRA:\n   \u2022 RAVEN already has its own dedicated 4-step consistency turbo LoRA baked directly into the model loader at strength 1.0!\n   \u2022 NEVER stack an 8-step Turbo LoRA on top: two different turbo schedulers will clash and distort timesteps.\n   \u2022 Content LoRAs work great: 35mm Cinema (CinematicMH3-V01), Red Dragon Camera, Combat LoRA, Realism LoRA.\n   \u2022 Genre / Stylistic LoRAs can be dynamically toggled via the LoRA stack according to scene needs.\n\n4. \ud83d\udce1 LIVE CONTINUOUS STREAMING & RTSP / RTMP:\n   \u2022 WebSocket fMP4: Streams live frames directly to your ComfyUI browser canvas as it generates.\n   \u2022 Local RTSP Server: Set broadcaster to 'RTSP_Stream_Local' and watch live in VLC (Media > Open Network Stream > rtsp://127.0.0.1:8554/live) or OBS Studio.\n   \u2022 RTMP Streaming: Set to 'RTMP_Stream_YouTube' or 'Twitch', enter your stream key, and broadcast 24/7 without frame drops."
+      ],
       "color": "#1f3a52",
       "bgcolor": "#132333",
       "title": "\ud83d\udcd8 Director's Master Production Manual"
