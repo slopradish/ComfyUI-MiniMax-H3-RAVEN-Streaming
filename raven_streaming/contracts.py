@@ -95,7 +95,12 @@ AUDIO_LATENT_CHANNELS = 32
 # CONDITIONING
 # --------------------------------------------------------------------------
 #: Extras a plain T2VA encode legitimately carries.
-ALLOWED_CONDITIONING_KEYS: frozenset = frozenset({"pooled_output", "minimax_token_tags"})
+ALLOWED_CONDITIONING_KEYS: frozenset = frozenset({
+    "pooled_output",
+    "minimax_token_tags",
+    "attention_mask",
+    "clip_vision_output",
+})
 
 #: Extras we know about and refuse, with the reason shown to the user.
 UNSUPPORTED_CONDITIONING_KEYS: Dict[str, str] = {

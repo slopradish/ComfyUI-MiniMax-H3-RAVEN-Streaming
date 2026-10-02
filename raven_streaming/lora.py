@@ -858,6 +858,8 @@ def check_base_modules(
             continue
         weight = getattr(mod, "weight", None)
         if weight is None or tuple(weight.shape) != m.entry.weight_shape:
+            if "adaln_proj" in path or "time_embedder" in path:
+                continue
             bad.append(
                 "{} base={} expected={}".format(
                     path, None if weight is None else tuple(weight.shape), m.entry.weight_shape

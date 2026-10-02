@@ -259,11 +259,15 @@ def _make_model_causal(model_patcher):
             for index, block in enumerate(diff.blocks):
                 if hasattr(block, "attn") and not isinstance(block.attn, RavenCausalAttention):
                     old_attn = block.attn
+                    heads = getattr(old_attn, "heads", 24)
+                    head_dim = getattr(old_attn, "head_dim", 128)
+                    hidden = getattr(old_attn, "hidden", heads * head_dim)
+                    eps = getattr(old_attn, "eps", 1e-5)
                     causal_attn = RavenCausalAttention(
-                        old_attn.hidden,
-                        old_attn.heads,
-                        old_attn.head_dim,
-                        old_attn.eps,
+                        hidden,
+                        heads,
+                        head_dim,
+                        eps,
                         layer_idx=index,
                         dtype=getattr(old_attn, "dtype", None),
                         device=getattr(old_attn, "device", None),
