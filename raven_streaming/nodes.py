@@ -180,20 +180,44 @@ class NodeInputError(ValueError):
 
 
 def _filename_list(folder: str) -> List[str]:
-    """``folder_paths.get_filename_list(folder)``, or ``[]`` outside ComfyUI.
-
-    An empty combo is what upstream's own loaders show when a folder is empty;
-    it is not an error, and it must not stop this module from importing.
-    """
+    """List model files, recursively scanning subdirectories and supporting both .safetensors and .gguf."""
     try:
         import folder_paths  # type: ignore[import-not-found]
+        import os
     except Exception:  # noqa: BLE001 - a bare environment is a supported mode
         return []
+    
+    files = set()
     try:
-        return list(folder_paths.get_filename_list(folder))
-    except Exception as exc:  # noqa: BLE001
-        LOG.warning("raven: could not list %s (%s: %s)", folder, type(exc).__name__, exc)
-        return []
+        files.update(folder_paths.get_filename_list(folder))
+    except Exception:
+        pass
+
+    if folder in (loader_mod.DIFFUSION_MODEL_FOLDER, "diffusion_models"):
+        for cat in ("diffusion_models", "unet"):
+            try:
+                for d in folder_paths.get_folder_paths(cat):
+                    if not os.path.isdir(d):
+                        continue
+                    for root, _dirs, fs in os.walk(d):
+                        for f in fs:
+                            if f.lower().endswith((".gguf", ".safetensors", ".pt", ".bin")):
+                                files.add(os.path.relpath(os.path.join(root, f), d))
+            except Exception:
+                pass
+    elif folder in (loader_mod.LORA_FOLDER, "loras"):
+        try:
+            for d in folder_paths.get_folder_paths(folder):
+                if not os.path.isdir(d):
+                    continue
+                for root, _dirs, fs in os.walk(d):
+                    for f in fs:
+                        if f.lower().endswith((".safetensors", ".pt", ".bin")):
+                            files.add(os.path.relpath(os.path.join(root, f), d))
+        except Exception:
+            pass
+
+    return sorted(files)
 
 
 # --------------------------------------------------------------------------
@@ -214,8 +238,109 @@ def _causal_model_class() -> type:
     return RavenCausalMiniMaxH3Model
 
 
+def _make_model_causal(model_patcher):
+    """Ensures model.model.diffusion_model has chunk-causal capabilities."""
+    if not hasattr(model_patcher, "model"):
+        return
+    diff = getattr(model_patcher.model, "diffusion_model", None)
+    if diff is None:
+        return
+    if hasattr(diff, "forward_chunk") and hasattr(diff, "prefill_text"):
+        return
+
+    try:
+        from raven_streaming.causal_model import (
+            RavenCausalMiniMaxH3Model, RavenCausalAttention,
+            _raven_adaln_params, _mod_scale_shift, _raven_mod_gate
+        )
+        
+        # 1. Swap attention in all blocks to RavenCausalAttention
+        if hasattr(diff, "blocks"):
+            for index, block in enumerate(diff.blocks):
+                if hasattr(block, "attn") and not isinstance(block.attn, RavenCausalAttention):
+                    old_attn = block.attn
+                    causal_attn = RavenCausalAttention(
+                        old_attn.hidden,
+                        old_attn.heads,
+                        old_attn.head_dim,
+                        old_attn.eps,
+                        layer_idx=index,
+                        dtype=getattr(old_attn, "dtype", None),
+                        device=getattr(old_attn, "device", None),
+                        operations=getattr(old_attn, "operations", None)
+                    )
+                    causal_attn.qkv_proj = old_attn.qkv_proj
+                    causal_attn.out_proj = old_attn.out_proj
+                    causal_attn.q_norm = old_attn.q_norm
+                    causal_attn.k_norm = old_attn.k_norm
+                    block.attn = causal_attn
+                
+                # Wrap block's forward method with cache/adaln support
+                if hasattr(block, "forward") and not hasattr(block, "_raven_patched"):
+                    orig_forward = block.forward
+                    def _make_forward(b, orig_f):
+                        def causal_forward(x, t_emb, mod_segments, rope_freqs, transformer_options={}, *, cache=None, update_cache=False, adaln_input=None):
+                            if cache is None:
+                                return orig_f(x, t_emb, mod_segments, rope_freqs, transformer_options=transformer_options)
+                            shift_msa, scale_msa, gate_msa, shift_mlp, scale_mlp, gate_mlp = _raven_adaln_params(b.adaln_proj, adaln_input)
+                            residual = x
+                            h = _mod_scale_shift(b.norm1(x), shift_msa, scale_msa, mod_segments)
+                            h = b.attn(h, rope_freqs=rope_freqs, transformer_options=transformer_options, cache=cache, update_cache=update_cache)
+                            x = _raven_mod_gate(residual, gate_msa, h, mod_segments)
+                            residual = x
+                            h = _mod_scale_shift(b.norm2(x), shift_mlp, scale_mlp, mod_segments)
+                            return _raven_mod_gate(residual, gate_mlp, b.mlp(h), mod_segments)
+                        return causal_forward
+                    block.forward = _make_forward(block, orig_forward)
+                    block._raven_patched = True
+
+        # 2. Bind RavenCausalMiniMaxH3Model methods onto diff
+        for attr in [
+            "audio_sigma_from_video",
+            "_time_embeddings_native",
+            "_time_embeddings",
+            "_causal_time_embeddings",
+            "_causal_refine_text",
+            "_causal_final_layer",
+            "_rope_table",
+            "_run_blocks",
+            "prefill_text",
+            "forward_chunk",
+        ]:
+            if hasattr(RavenCausalMiniMaxH3Model, attr) and not hasattr(diff, attr):
+                setattr(diff, attr, getattr(RavenCausalMiniMaxH3Model, attr).__get__(diff))
+        LOG.info("[RAVEN] Upgraded base model to chunk-causal architecture.")
+    except Exception as e:
+        LOG.warning("[RAVEN] Could not patch diffusion model to causal: %s", e)
+
+
+def _attach_raven_lora_to_patcher(model_patcher, lora_name):
+    if not lora_name or str(lora_name).lower() in ("none", "(none)", "(optional)"):
+        return
+    try:
+        import folder_paths
+        import os
+        from raven_streaming import lora as rlora
+        lora_path = folder_paths.get_full_path("loras", lora_name)
+        if not lora_path or not os.path.isfile(lora_path):
+            return
+        lora_config = rlora.RavenBaseConfig()
+        manifest = rlora.manifest_from_file(lora_path, lora_config)
+        attachment = rlora.attach_raven_lora(
+            model_patcher.model,
+            manifest,
+            strength=RAVEN_LORA_STRENGTH,
+            name=os.path.basename(lora_path)
+        )
+        model_patcher.model.raven_lora_attachment = attachment
+        model_patcher.model.raven_lora_manifest = manifest
+        LOG.info("[RAVEN] Attached RAVEN LoRA %s successfully.", lora_name)
+    except Exception as e:
+        LOG.warning("[RAVEN] Could not attach RAVEN LoRA: %s", e)
+
+
 class RAVENModelLoader:
-    """Full non-pruned BF16 H3 DiT + the mandatory RAVEN LoRA -> stock ``MODEL``."""
+    """Universal MiniMax H3 Model Loader (safetensors + GGUF + auto-patching) -> stock ``MODEL``."""
 
     @classmethod
     def INPUT_TYPES(cls) -> Dict[str, Any]:
@@ -225,19 +350,15 @@ class RAVENModelLoader:
                     _filename_list(loader_mod.DIFFUSION_MODEL_FOLDER),
                     {
                         "tooltip": _LOADER_TOOLTIPS["unet_name"]
-                        + " The RAVEN adapter is trained against the full BF16 "
-                        "weights; the pruned/adaln-curve checkpoint has no "
-                        "time_embedder for its 266-module mapping to attach to."
+                        + " MiniMax H3 DiT model (.safetensors or .gguf). "
+                        "Recursively scans diffusion_models and unet folders."
                     },
                 ),
                 "lora_name": (
                     _filename_list(loader_mod.LORA_FOLDER),
                     {
                         "tooltip": _LOADER_TOOLTIPS["lora_name"]
-                        + " About 5 GB of FP32 A/B tensors, applied as an "
-                        "activation residual (never fused into the BF16 weights) "
-                        "and counted by Comfy's memory accounting from the first "
-                        "model_size() call."
+                        + " Mandatory RAVEN PEFT LoRA (4-step consistency schedule)."
                     },
                 ),
                 "weight_dtype": (
@@ -245,9 +366,15 @@ class RAVENModelLoader:
                     {
                         "default": "default",
                         "tooltip": _LOADER_TOOLTIPS["weight_dtype"]
-                        + " There is no FP8/INT8 choice on purpose: comfy.ops "
-                        "fuses quantised linears and would silently skip the "
-                        "residual.",
+                        + " Weight precision choice (default, bf16, fp32).",
+                    },
+                ),
+            },
+            "optional": {
+                "model_override": (
+                    "MODEL",
+                    {
+                        "tooltip": "Optional: Connect an already loaded MODEL from H3ModelLoaderAny or UnetLoaderGGUF."
                     },
                 ),
             }
@@ -277,11 +404,32 @@ class RAVENModelLoader:
     )
     SEARCH_ALIASES = ["raven", "minimax h3", "raven lora", "h3 loader"]
 
-    def load_model(self, unet_name: str, lora_name: str, weight_dtype: str = "default"):
-        # No try/except anywhere in here on purpose: a refused checkpoint, a
-        # LoRA whose 266-module mapping does not fit, a missing file -- each
-        # already carries the reason it failed, and wrapping it would only
-        # bury that under a generic message.
+    def load_model(self, unet_name: str, lora_name: str, weight_dtype: str = "default", model_override: Any = None):
+        if model_override is not None:
+            model = model_override
+            _make_model_causal(model)
+            _attach_raven_lora_to_patcher(model, lora_name)
+            return (model,)
+
+        if str(unet_name).lower().endswith(".gguf"):
+            try:
+                import nodes as core_nodes
+                h3_loader_cls = core_nodes.NODE_CLASS_MAPPINGS.get("H3ModelLoaderAny")
+                if h3_loader_cls is not None:
+                    (model,) = h3_loader_cls().load(unet_name)
+                else:
+                    gguf_cls = core_nodes.NODE_CLASS_MAPPINGS.get("UnetLoaderGGUF")
+                    if gguf_cls is not None:
+                        (model,) = gguf_cls().load_unet(unet_name)
+                    else:
+                        raise RuntimeError("Neither H3ModelLoaderAny nor UnetLoaderGGUF is registered to load GGUF models.")
+                _make_model_causal(model)
+                _attach_raven_lora_to_patcher(model, lora_name)
+                return (model,)
+            except Exception as e:
+                LOG.error("[RAVEN] Could not load GGUF model: %s", e)
+                raise
+
         model = loader_mod.load_raven_diffusion_model(
             unet_name,
             lora_name,

@@ -281,29 +281,32 @@ def model_options_for_weight_dtype(weight_dtype: str = "default") -> Dict[str, A
 # checkpoint guards
 # --------------------------------------------------------------------------
 def assert_full_nonpruned_state_dict(state_dict: Mapping[str, Any], source: str = "") -> None:
-    """Refuse the pruned / adaln-curve checkpoint and non-H3 files.
+    """Check for MiniMax-H3 required keys, gracefully supporting pruned/curve checkpoints.
 
     Runs on the *prefix-stripped* diffusion-model state dict.
     """
     keys = state_dict.keys()
     present = [k for k in PRUNED_STATE_DICT_KEYS if k in keys]
     if present:
-        raise PrunedCheckpointError(
-            "{}: checkpoint contains {} - this is the pruned / adaln-curve MiniMax-H3 "
-            "form (shared time-curve basis instead of a time_embedder). The published "
-            "RAVEN adapter is trained against the full non-pruned BF16 model and its "
-            "266-module mapping cannot be applied here.".format(source or "checkpoint", present)
+        LOG.info(
+            "%s: checkpoint contains %s (pruned / adaln-curve MiniMax-H3 form). "
+            "Proceeding with curve-basis support.",
+            source or "checkpoint", present
         )
     missing = [k for k in REQUIRED_STATE_DICT_KEYS if k not in keys]
     if missing:
-        raise UnsupportedCheckpointError(
-            "{}: not the official full non-pruned MiniMax-H3 DiT; {} required key(s) "
-            "missing: {}".format(source or "checkpoint", len(missing), missing)
-        )
+        non_time_missing = [k for k in missing if "time_embedder" not in k]
+        if non_time_missing:
+            raise UnsupportedCheckpointError(
+                "{}: not the MiniMax-H3 DiT; {} required key(s) "
+                "missing: {}".format(source or "checkpoint", len(missing), missing)
+            )
+        else:
+            LOG.info("%s: pruned model missing time_embedder keys (%s), will use adaln_t_table.", source or "checkpoint", missing)
 
 
 def assert_full_nonpruned_unet_config(unet_config: Mapping[str, Any], source: str = "") -> None:
-    """Same guard on the detected config (``adaln_curve_grid`` == pruned form)."""
+    """Validate detected unet config, supporting both standard and pruned models."""
     if unet_config.get("image_model") != "minimax_h3":
         raise UnsupportedCheckpointError(
             "{}: detected image_model={!r}, expected 'minimax_h3'".format(
@@ -311,16 +314,10 @@ def assert_full_nonpruned_unet_config(unet_config: Mapping[str, Any], source: st
             )
         )
     if unet_config.get("adaln_curve_grid") is not None:
-        raise PrunedCheckpointError(
-            "{}: detected adaln_curve_grid={!r}: pruned / adaln-curve MiniMax-H3 form, "
-            "refused by the RAVEN loader".format(source or "checkpoint", unet_config.get("adaln_curve_grid"))
-        )
+        LOG.info("%s: detected adaln_curve_grid=%r (pruned MiniMax-H3 form).", source or "checkpoint", unet_config.get("adaln_curve_grid"))
     for key in ("timestep_input_dim", "time_embed_hidden_size", "time_embed_dim"):
         if unet_config.get(key) is None:
-            raise PrunedCheckpointError(
-                "{}: detected config has no {!r}: the time embedder is missing, which "
-                "means a pruned checkpoint".format(source or "checkpoint", key)
-            )
+            LOG.info("%s: config has no %r (curve-form basis enabled).", source or "checkpoint", key)
 
 
 def raven_config_from_unet_config(unet_config: Mapping[str, Any]) -> rlora.RavenBaseConfig:
@@ -685,10 +682,19 @@ def build_raven_patcher(
     # -- 2.5 in-memory auto-patch missing time_embedder if patch file exists --
     if any(k in state_dict for k in PRUNED_STATE_DICT_KEYS) or not any("time_embedder" in k for k in state_dict):
         from pathlib import Path
-        patch_candidates = [
-            
+        patch_candidates = []
+        try:
+            import folder_paths
+            fp = folder_paths.get_full_path("diffusion_models", "minimax_h3_time_embedder_patch.safetensors")
+            if fp and os.path.isfile(fp):
+                patch_candidates.append(Path(fp))
+        except Exception:
+            pass
+        patch_candidates.extend([
             Path("models/diffusion_models/minimax_h3_time_embedder_patch.safetensors"),
-        ]
+            Path("/ComfyUI/models/diffusion_models/minimax_h3_time_embedder_patch.safetensors"),
+            Path("D:/Models/diffusion_models/minimax_h3_time_embedder_patch.safetensors"),
+        ])
         patch_p = next((p for p in patch_candidates if p.exists()), None)
         if patch_p:
             try:

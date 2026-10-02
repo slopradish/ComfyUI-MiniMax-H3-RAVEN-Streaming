@@ -1,78 +1,9 @@
 {
+  "id": "5a4e5f4c-dda7-40b7-b631-d1239abea71e",
   "revision": 1,
-  "last_node_id": 70,
-  "last_link_id": 50,
+  "last_node_id": 2005,
+  "last_link_id": 51,
   "nodes": [
-    {
-      "id": 1,
-      "type": "RAVENModelLoader",
-      "pos": [
-        40,
-        100
-      ],
-      "size": [
-        440,
-        120
-      ],
-      "flags": {},
-      "order": 0,
-      "mode": 0,
-      "inputs": [],
-      "outputs": [
-        {
-          "name": "MODEL",
-          "type": "MODEL",
-          "slot_index": 0,
-          "links": [
-            1
-          ]
-        }
-      ],
-      "properties": {
-        "Node name for S&R": "RAVENModelLoader"
-      },
-      "widgets_values": [
-        "MiniMax-H3-FL2VA-Q4_K_M.gguf",
-        "minimax_h3_raven_streaming_lora_4nfe_preview.safetensors",
-        "default"
-      ],
-      "title": "\ud83e\udde0 RAVEN Universal Model Loader (Auto-Patch & GGUF)"
-    },
-    {
-      "id": 2,
-      "type": "CLIPLoader",
-      "pos": [
-        40,
-        270
-      ],
-      "size": [
-        440,
-        110
-      ],
-      "flags": {},
-      "order": 1,
-      "mode": 0,
-      "inputs": [],
-      "outputs": [
-        {
-          "name": "CLIP",
-          "type": "CLIP",
-          "slot_index": 0,
-          "links": [
-            2
-          ]
-        }
-      ],
-      "properties": {
-        "Node name for S&R": "CLIPLoader"
-      },
-      "widgets_values": [
-        "qwen3vl_32b_minimax_h3_nvfp4_awq.safetensors",
-        "minimax",
-        "default"
-      ],
-      "title": "\ud83d\udc41\ufe0f Qwen3-VL-32B Multimodal Text Encoder"
-    },
     {
       "id": 3,
       "type": "VAELoader",
@@ -85,11 +16,22 @@
         60
       ],
       "flags": {},
-      "order": 2,
+      "order": 0,
       "mode": 0,
-      "inputs": [],
+      "inputs": [
+        {
+          "localized_name": "vae_name",
+          "name": "vae_name",
+          "type": "COMBO",
+          "widget": {
+            "name": "vae_name"
+          },
+          "link": null
+        }
+      ],
       "outputs": [
         {
+          "localized_name": "VAE",
           "name": "VAE",
           "type": "VAE",
           "slot_index": 0,
@@ -99,46 +41,25 @@
           ]
         }
       ],
+      "title": "\ud83c\udf9e\ufe0f MiniMax H3 Video VAE (FP16)",
       "properties": {
-        "Node name for S&R": "VAELoader"
+        "cnr_id": "comfy-core",
+        "ver": "0.33.0",
+        "Node name for S&R": "VAELoader",
+        "ue_properties": {
+          "widget_ue_connectable": {},
+          "version": "7.8",
+          "input_ue_unconnectable": {}
+        }
       },
       "widgets_values": [
         "minimax_h3_video_vae_fp16.safetensors"
       ],
-      "title": "\ud83c\udf9e\ufe0f MiniMax H3 Video VAE (FP16)"
-    },
-    {
-      "id": 4,
-      "type": "VAELoader",
-      "pos": [
-        40,
-        540
-      ],
-      "size": [
-        440,
-        60
-      ],
-      "flags": {},
-      "order": 3,
-      "mode": 0,
-      "inputs": [],
-      "outputs": [
-        {
-          "name": "VAE",
-          "type": "VAE",
-          "slot_index": 0,
-          "links": [
-            6
-          ]
-        }
-      ],
-      "properties": {
-        "Node name for S&R": "VAELoader"
+      "widgets_values_named": {
+        "vae_name": "minimax_h3_video_vae_fp16.safetensors"
       },
-      "widgets_values": [
-        "minimax_h3_audio_vae_fp32.safetensors"
-      ],
-      "title": "\ud83d\udd0a MiniMax H3 Stereo Audio VAE (FP32)"
+      "ndSuperSelectorEnabled": false,
+      "ndPowerEnabled": false
     },
     {
       "id": 10,
@@ -152,15 +73,17 @@
         500
       ],
       "flags": {},
-      "order": 4,
+      "order": 9,
       "mode": 0,
       "inputs": [
         {
+          "dir": 3,
           "name": "model",
           "type": "MODEL",
           "link": 1
         },
         {
+          "dir": 3,
           "name": "clip",
           "type": "CLIP",
           "link": null
@@ -168,6 +91,7 @@
       ],
       "outputs": [
         {
+          "dir": 4,
           "name": "MODEL",
           "type": "MODEL",
           "slot_index": 0,
@@ -176,14 +100,25 @@
           ]
         },
         {
+          "dir": 4,
           "name": "CLIP",
           "type": "CLIP",
           "slot_index": 1,
           "links": null
         }
       ],
+      "title": "\u26a1 Power LoRA Stack (rgthree) \u2014 35mm Cinema / Optics / Combat",
       "properties": {
-        "Node name for S&R": "Power Lora Loader (rgthree)"
+        "cnr_id": "rgthree-comfy",
+        "ver": "6b76ee6f2c5a007710b5a16f97c94330d6ecc871",
+        "Show Strengths": "Single Strength",
+        "Match": "",
+        "Node name for S&R": "Power Lora Loader (rgthree)",
+        "ue_properties": {
+          "widget_ue_connectable": {},
+          "version": "7.8",
+          "input_ue_unconnectable": {}
+        }
       },
       "widgets_values": [
         {},
@@ -229,47 +164,49 @@
         {},
         ""
       ],
-      "title": "\u26a1 Power LoRA Stack (rgthree) \u2014 35mm Cinema / Optics / Combat"
-    },
-    {
-      "id": 2001,
-      "type": "LoadImage",
-      "pos": [
-        40,
-        720
-      ],
-      "size": [
-        320,
-        310
-      ],
-      "flags": {},
-      "order": 5,
-      "mode": 0,
-      "inputs": [],
-      "outputs": [
-        {
-          "name": "IMAGE",
-          "type": "IMAGE",
-          "slot_index": 0,
-          "links": [
-            21
-          ]
+      "widgets_values_named": {
+        "divider": {},
+        "PowerLoraLoaderHeaderWidget": {
+          "type": "PowerLoraLoaderHeaderWidget"
         },
-        {
-          "name": "MASK",
-          "type": "MASK",
-          "slot_index": 1,
-          "links": null
-        }
-      ],
-      "properties": {
-        "Node name for S&R": "LoadImage"
-      },
-      "widgets_values": [
-        "inputs/characters/cinema/char1.png",
-        "image"
-      ],
-      "title": "\ud83d\udc64 Lead Character A (@char1)"
+        "lora_1": {
+          "on": true,
+          "lora": "minimax/crossovers/CinematicMH3-V01.safetensors",
+          "strength": 0.55,
+          "strengthTwo": null
+        },
+        "lora_2": {
+          "on": true,
+          "lora": "minimax/cinema/cameras_and_optics/Red_Dragon_Camera_minimax.safetensors",
+          "strength": 0.6,
+          "strengthTwo": null
+        },
+        "lora_3": {
+          "on": false,
+          "lora": "minimax/cinema/styles_and_art/Seedance_inspired_V01_minimax.safetensors",
+          "strength": 0.5,
+          "strengthTwo": null
+        },
+        "lora_4": {
+          "on": false,
+          "lora": "minimax/MiniMax_H3_Combat_LoRA.safetensors",
+          "strength": 0.8,
+          "strengthTwo": null
+        },
+        "lora_5": {
+          "on": false,
+          "lora": "minimax/H3_Motion_BoosterV2.safetensors",
+          "strength": 0.6,
+          "strengthTwo": null
+        },
+        "lora_6": {
+          "on": false,
+          "lora": "minimax/h3-realism-people-t2v-i2v-r2v.safetensors",
+          "strength": 0.55,
+          "strengthTwo": null
+        },
+        "\u2795 Add Lora": ""
+      }
     },
     {
       "id": 2003,
@@ -283,89 +220,74 @@
         110
       ],
       "flags": {},
-      "order": 6,
+      "order": 8,
       "mode": 0,
       "inputs": [
         {
+          "localized_name": "image",
           "name": "image",
           "type": "IMAGE",
           "link": 21
         },
         {
+          "localized_name": "previous",
           "name": "previous",
-          "type": "TAGGED_REFERENCE",
+          "shape": 7,
+          "type": "H3_TAGGED_REFERENCES",
+          "link": null
+        },
+        {
+          "localized_name": "tag",
+          "name": "tag",
+          "type": "STRING",
+          "widget": {
+            "name": "tag"
+          },
           "link": null
         }
       ],
       "outputs": [
         {
+          "localized_name": "references",
           "name": "references",
-          "type": "TAGGED_REFERENCE",
+          "type": "H3_TAGGED_REFERENCES",
           "slot_index": 0,
           "links": [
             23
           ]
         },
         {
+          "localized_name": "reference_fingerprint",
           "name": "reference_fingerprint",
           "type": "STRING",
           "slot_index": 1,
           "links": null
         },
         {
+          "localized_name": "status",
           "name": "status",
           "type": "STRING",
           "slot_index": 2,
           "links": null
         }
       ],
+      "title": "\ud83c\udff7\ufe0f Tagged Ref Char 1 (@char1)",
       "properties": {
-        "Node name for S&R": "MiniMaxH3TaggedPictureReference"
+        "cnr_id": "comfyui-workflow-encrypt",
+        "ver": "1.0.0",
+        "Node name for S&R": "MiniMaxH3TaggedPictureReference",
+        "ue_properties": {
+          "widget_ue_connectable": {},
+          "version": "7.8",
+          "input_ue_unconnectable": {}
+        }
       },
       "widgets_values": [
         "char1"
       ],
-      "title": "\ud83c\udff7\ufe0f Tagged Ref Char 1 (@char1)"
-    },
-    {
-      "id": 2002,
-      "type": "LoadImage",
-      "pos": [
-        40,
-        1070
-      ],
-      "size": [
-        320,
-        310
-      ],
-      "flags": {},
-      "order": 7,
-      "mode": 0,
-      "inputs": [],
-      "outputs": [
-        {
-          "name": "IMAGE",
-          "type": "IMAGE",
-          "slot_index": 0,
-          "links": [
-            22
-          ]
-        },
-        {
-          "name": "MASK",
-          "type": "MASK",
-          "slot_index": 1,
-          "links": null
-        }
-      ],
-      "properties": {
-        "Node name for S&R": "LoadImage"
-      },
-      "widgets_values": [
-        "inputs/characters/cinema/char2.png",
-        "image"
-      ],
-      "title": "\ud83d\udc64 Lead Character B (@char2)"
+      "widgets_values_named": {
+        "tag": "char1"
+      }
     },
     {
       "id": 2004,
@@ -379,187 +301,72 @@
         110
       ],
       "flags": {},
-      "order": 8,
+      "order": 11,
       "mode": 0,
       "inputs": [
         {
+          "localized_name": "image",
           "name": "image",
           "type": "IMAGE",
           "link": 22
         },
         {
+          "localized_name": "previous",
           "name": "previous",
-          "type": "TAGGED_REFERENCE",
+          "shape": 7,
+          "type": "H3_TAGGED_REFERENCES",
           "link": 23
+        },
+        {
+          "localized_name": "tag",
+          "name": "tag",
+          "type": "STRING",
+          "widget": {
+            "name": "tag"
+          },
+          "link": null
         }
       ],
       "outputs": [
         {
+          "localized_name": "references",
           "name": "references",
-          "type": "TAGGED_REFERENCE",
+          "type": "H3_TAGGED_REFERENCES",
           "slot_index": 0,
           "links": []
         },
         {
+          "localized_name": "reference_fingerprint",
           "name": "reference_fingerprint",
           "type": "STRING",
           "slot_index": 1,
           "links": null
         },
         {
+          "localized_name": "status",
           "name": "status",
           "type": "STRING",
           "slot_index": 2,
           "links": null
         }
       ],
+      "title": "\ud83c\udff7\ufe0f Tagged Ref Char 2 (@char2)",
       "properties": {
-        "Node name for S&R": "MiniMaxH3TaggedPictureReference"
+        "cnr_id": "comfyui-workflow-encrypt",
+        "ver": "1.0.0",
+        "Node name for S&R": "MiniMaxH3TaggedPictureReference",
+        "ue_properties": {
+          "widget_ue_connectable": {},
+          "version": "7.8",
+          "input_ue_unconnectable": {}
+        }
       },
       "widgets_values": [
         "char2"
       ],
-      "title": "\ud83c\udff7\ufe0f Tagged Ref Char 2 (@char2)"
-    },
-    {
-      "id": 15,
-      "type": "RavenTimelineDirector",
-      "pos": [
-        1060,
-        100
-      ],
-      "size": [
-        500,
-        560
-      ],
-      "flags": {},
-      "order": 9,
-      "mode": 0,
-      "inputs": [],
-      "outputs": [
-        {
-          "name": "active_prompt",
-          "type": "STRING",
-          "slot_index": 0,
-          "links": [
-            15
-          ]
-        },
-        {
-          "name": "subject_definitions",
-          "type": "STRING",
-          "slot_index": 1,
-          "links": []
-        },
-        {
-          "name": "overall_soundscape",
-          "type": "STRING",
-          "slot_index": 2,
-          "links": []
-        },
-        {
-          "name": "detailed_description",
-          "type": "STRING",
-          "slot_index": 3,
-          "links": []
-        },
-        {
-          "name": "total_shots",
-          "type": "INT",
-          "slot_index": 4,
-          "links": []
-        },
-        {
-          "name": "timeline_summary",
-          "type": "STRING",
-          "slot_index": 5,
-          "links": []
-        }
-      ],
-      "properties": {
-        "Node name for S&R": "RavenTimelineDirector"
-      },
-      "widgets_values": [
-        "subject_definitions: <LEAD_A> is the focal protagonist in cinematic attire visible in @char1 and <LEAD_B> is the secondary lead visible in @char2.\n\nsummary: [reference generation] The target sequence captures an intense dramatic exchange between two leads.\n\nretention_analysis: <LEAD_A> (present throughout): fully_preserved. <LEAD_B> (present throughout): fully_preserved.\n\n[Shot 1] At 00:00.000, detailed_description: [0.00s-3.13s] Act I (Spatial Framing & Atmosphere): Camera opens on an intimate establishing medium shot with volumetric tungsten rim lighting catching ambient atmospheric dust...\n\n[Shot 2] At 00:03.000, detailed_description: [3.13s-6.27s] Act II (Physical Choreography & Quoted Dialogue): Smooth tracking push-in as <LEAD_A> steps closer with intense micro-acting focus, saying: \"Are you sure about this?\" with visible phoneme lip-sync...\n\ncamera_movement: Slow steadycam push-in transitioning to a gentle orbital arc, 35mm anamorphic prime lens at T1.5 with shallow depth of field.\n\nlighting_and_atmosphere: High-contrast chiaroscuro lighting, deep shadow rolloff, natural cinematic lens flare.\n\noverall_soundscape: Intimate interior room tone RT60=0.35s, soft fabric rustle, warm low-frequency 45Hz sub-bass presence, crisp clear dialogue without muffling.\n\nnon_diegetic_music: N/A\n\nCRITICAL RULES:\n- Consistent facial identity and wardrobe throughout.\n- Precise visible lip-sync phoneme articulation and natural jaw cadence.",
-        "Continuous_Sequence (All Shots Combined)",
-        true
-      ],
-      "title": "\ud83c\udfac RAVEN Timeline Director & Multi-Shot Screenplay Engine"
-    },
-    {
-      "id": 20,
-      "type": "MiniMaxH3ImageToVideo",
-      "pos": [
-        1590,
-        100
-      ],
-      "size": [
-        440,
-        360
-      ],
-      "flags": {},
-      "order": 10,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "clip",
-          "type": "CLIP",
-          "link": 2
-        },
-        {
-          "name": "vae",
-          "type": "VAE",
-          "link": 3
-        },
-        {
-          "name": "prompt",
-          "type": "STRING",
-          "widget": {
-            "name": "prompt"
-          },
-          "link": 15
-        },
-        {
-          "name": "first_frame",
-          "type": "IMAGE",
-          "shape": 7,
-          "link": null
-        },
-        {
-          "name": "last_frame",
-          "type": "IMAGE",
-          "shape": 7,
-          "link": null
-        }
-      ],
-      "outputs": [
-        {
-          "name": "positive",
-          "type": "CONDITIONING",
-          "slot_index": 0,
-          "links": [
-            4
-          ]
-        },
-        {
-          "name": "LATENT",
-          "type": "LATENT",
-          "slot_index": 1,
-          "links": [
-            7
-          ]
-        }
-      ],
-      "properties": {
-        "Node name for S&R": "MiniMaxH3ImageToVideo"
-      },
-      "widgets_values": [
-        "",
-        1376,
-        768,
-        192
-      ],
-      "title": "\ud83d\udcd0 MiniMax H3 Latent & Conditioning Engine (1376x768 x 192f)"
+      "widgets_values_named": {
+        "tag": "char2"
+      }
     },
     {
       "id": 30,
@@ -569,47 +376,117 @@
         100
       ],
       "size": [
-        440,
+        462.6608642578125,
         480
       ],
       "flags": {},
-      "order": 11,
+      "order": 12,
       "mode": 0,
       "inputs": [
         {
+          "localized_name": "model",
           "name": "model",
           "type": "MODEL",
           "link": 10
         },
         {
+          "localized_name": "positive",
           "name": "positive",
           "type": "CONDITIONING",
           "link": 4
         },
         {
+          "localized_name": "latent",
           "name": "latent",
           "type": "LATENT",
           "link": 7
         },
         {
+          "localized_name": "video_vae",
           "name": "video_vae",
           "type": "VAE",
           "link": 5
         },
         {
+          "localized_name": "audio_vae",
           "name": "audio_vae",
           "type": "VAE",
           "link": 6
+        },
+        {
+          "localized_name": "seed",
+          "name": "seed",
+          "type": "INT",
+          "widget": {
+            "name": "seed"
+          },
+          "link": null
+        },
+        {
+          "localized_name": "steps",
+          "name": "steps",
+          "type": "INT",
+          "widget": {
+            "name": "steps"
+          },
+          "link": null
+        },
+        {
+          "localized_name": "video_shift",
+          "name": "video_shift",
+          "type": "FLOAT",
+          "widget": {
+            "name": "video_shift"
+          },
+          "link": null
+        },
+        {
+          "localized_name": "audio_shift",
+          "name": "audio_shift",
+          "type": "FLOAT",
+          "widget": {
+            "name": "audio_shift"
+          },
+          "link": null
+        },
+        {
+          "localized_name": "sink",
+          "name": "sink",
+          "type": "INT",
+          "widget": {
+            "name": "sink"
+          },
+          "link": null
+        },
+        {
+          "localized_name": "window",
+          "name": "window",
+          "type": "INT",
+          "widget": {
+            "name": "window"
+          },
+          "link": null
+        },
+        {
+          "localized_name": "kv_cache_storage",
+          "name": "kv_cache_storage",
+          "type": "COMBO",
+          "widget": {
+            "name": "kv_cache_storage"
+          },
+          "link": null
         }
       ],
       "outputs": [
         {
+          "localized_name": "LATENT",
           "name": "LATENT",
           "type": "LATENT",
           "slot_index": 0,
           "links": []
         },
         {
+          "localized_name": "IMAGE",
           "name": "IMAGE",
           "type": "IMAGE",
           "slot_index": 1,
@@ -620,6 +497,7 @@
           ]
         },
         {
+          "localized_name": "AUDIO",
           "name": "AUDIO",
           "type": "AUDIO",
           "slot_index": 2,
@@ -630,8 +508,16 @@
           ]
         }
       ],
+      "title": "\u26a1 RAVEN Streaming Sampler (SageAttention 2.2 + SceneVault)",
       "properties": {
-        "Node name for S&R": "RAVENStreamingSampler"
+        "cnr_id": "comfyui-workflow-encrypt",
+        "ver": "1.0.0",
+        "Node name for S&R": "RAVENStreamingSampler",
+        "ue_properties": {
+          "widget_ue_connectable": {},
+          "version": "7.8",
+          "input_ue_unconnectable": {}
+        }
       },
       "widgets_values": [
         0,
@@ -643,7 +529,16 @@
         2,
         "cpu_pinned"
       ],
-      "title": "\u26a1 RAVEN Streaming Sampler (SageAttention 2.2 + SceneVault)"
+      "widgets_values_named": {
+        "seed": 0,
+        "control_after_generate": "randomize",
+        "steps": 4,
+        "video_shift": 12,
+        "audio_shift": 3,
+        "sink": 2,
+        "window": 2,
+        "kv_cache_storage": "cpu_pinned"
+      }
     },
     {
       "id": 40,
@@ -657,42 +552,104 @@
         260
       ],
       "flags": {},
-      "order": 12,
+      "order": 14,
       "mode": 0,
       "inputs": [
         {
+          "localized_name": "images",
           "name": "images",
           "type": "IMAGE",
           "link": 31
         },
         {
+          "localized_name": "audio",
           "name": "audio",
           "type": "AUDIO",
           "link": 32
+        },
+        {
+          "localized_name": "broadcast_target",
+          "name": "broadcast_target",
+          "type": "COMBO",
+          "widget": {
+            "name": "broadcast_target"
+          },
+          "link": null
+        },
+        {
+          "localized_name": "custom_stream_url",
+          "name": "custom_stream_url",
+          "shape": 7,
+          "type": "STRING",
+          "widget": {
+            "name": "custom_stream_url"
+          },
+          "link": null
+        },
+        {
+          "localized_name": "stream_key",
+          "name": "stream_key",
+          "shape": 7,
+          "type": "STRING",
+          "widget": {
+            "name": "stream_key"
+          },
+          "link": null
+        },
+        {
+          "localized_name": "video_bitrate_kbps",
+          "name": "video_bitrate_kbps",
+          "shape": 7,
+          "type": "INT",
+          "widget": {
+            "name": "video_bitrate_kbps"
+          },
+          "link": null
+        },
+        {
+          "localized_name": "audio_bitrate_kbps",
+          "name": "audio_bitrate_kbps",
+          "shape": 7,
+          "type": "INT",
+          "widget": {
+            "name": "audio_bitrate_kbps"
+          },
+          "link": null
         }
       ],
       "outputs": [
         {
+          "localized_name": "images",
           "name": "images",
           "type": "IMAGE",
           "slot_index": 0,
           "links": []
         },
         {
+          "localized_name": "audio",
           "name": "audio",
           "type": "AUDIO",
           "slot_index": 1,
           "links": []
         },
         {
+          "localized_name": "stream_status",
           "name": "stream_status",
           "type": "STRING",
           "slot_index": 2,
           "links": []
         }
       ],
+      "title": "\ud83d\udce1 RAVEN Live Broadcaster (RTSP / RTMP / OBS)",
       "properties": {
-        "Node name for S&R": "RavenLiveBroadcaster"
+        "cnr_id": "comfyui-workflow-encrypt",
+        "ver": "1.0.0",
+        "Node name for S&R": "RavenLiveBroadcaster",
+        "ue_properties": {
+          "widget_ue_connectable": {},
+          "version": "7.8",
+          "input_ue_unconnectable": {}
+        }
       },
       "widgets_values": [
         "Local_Preview_WebRTC",
@@ -701,7 +658,13 @@
         8000,
         192
       ],
-      "title": "\ud83d\udce1 RAVEN Live Broadcaster (RTSP / RTMP / OBS)"
+      "widgets_values_named": {
+        "broadcast_target": "Local_Preview_WebRTC",
+        "custom_stream_url": "rtsp://127.0.0.1:8554/live",
+        "stream_key": "",
+        "video_bitrate_kbps": 8000,
+        "audio_bitrate_kbps": 192
+      }
     },
     {
       "id": 50,
@@ -711,58 +674,176 @@
         400
       ],
       "size": [
-        420,
-        320
+        447.978271484375,
+        334
       ],
       "flags": {},
-      "order": 13,
+      "order": 15,
       "mode": 0,
       "inputs": [
         {
+          "localized_name": "images",
           "name": "images",
           "type": "IMAGE",
           "link": 33
         },
         {
+          "localized_name": "audio",
           "name": "audio",
+          "shape": 7,
           "type": "AUDIO",
           "link": 34
         },
         {
+          "localized_name": "meta_batch",
           "name": "meta_batch",
+          "shape": 7,
           "type": "VHS_BatchManager",
           "link": null
         },
         {
+          "localized_name": "vae",
           "name": "vae",
+          "shape": 7,
           "type": "VAE",
+          "link": null
+        },
+        {
+          "localized_name": "frame_rate",
+          "name": "frame_rate",
+          "type": "FLOAT",
+          "widget": {
+            "name": "frame_rate"
+          },
+          "link": null
+        },
+        {
+          "localized_name": "loop_count",
+          "name": "loop_count",
+          "type": "INT",
+          "widget": {
+            "name": "loop_count"
+          },
+          "link": null
+        },
+        {
+          "localized_name": "filename_prefix",
+          "name": "filename_prefix",
+          "type": "STRING",
+          "widget": {
+            "name": "filename_prefix"
+          },
+          "link": null
+        },
+        {
+          "localized_name": "format",
+          "name": "format",
+          "type": "COMBO",
+          "widget": {
+            "name": "format"
+          },
+          "link": null
+        },
+        {
+          "localized_name": "pingpong",
+          "name": "pingpong",
+          "type": "BOOLEAN",
+          "widget": {
+            "name": "pingpong"
+          },
+          "link": null
+        },
+        {
+          "localized_name": "save_output",
+          "name": "save_output",
+          "type": "BOOLEAN",
+          "widget": {
+            "name": "save_output"
+          },
+          "link": null
+        },
+        {
+          "name": "pix_fmt",
+          "type": [
+            "yuv420p",
+            "yuv420p10le"
+          ],
+          "widget": {
+            "name": "pix_fmt"
+          },
+          "link": null
+        },
+        {
+          "name": "crf",
+          "type": "INT",
+          "widget": {
+            "name": "crf"
+          },
+          "link": null
+        },
+        {
+          "name": "save_metadata",
+          "type": "BOOLEAN",
+          "widget": {
+            "name": "save_metadata"
+          },
+          "link": null
+        },
+        {
+          "name": "trim_to_audio",
+          "type": "BOOLEAN",
+          "widget": {
+            "name": "trim_to_audio"
+          },
           "link": null
         }
       ],
       "outputs": [
         {
+          "localized_name": "Filenames",
           "name": "Filenames",
           "type": "VHS_FILENAMES",
           "slot_index": 0,
           "links": []
         }
       ],
+      "title": "\ud83c\udfa5 Broadcast Video Combine (H.264 MP4 + Stereo Audio)",
       "properties": {
-        "Node name for S&R": "VHS_VideoCombine"
+        "cnr_id": "comfyui-workflow-encrypt",
+        "ver": "1.0.0",
+        "Node name for S&R": "VHS_VideoCombine",
+        "ue_properties": {
+          "widget_ue_connectable": {},
+          "version": "7.8",
+          "input_ue_unconnectable": {}
+        }
       },
-      "widgets_values": [
-        24,
-        0,
-        "RAVEN_Cinema/scene",
-        "video/h264-mp4",
-        "yuv420p",
-        19,
-        true,
-        false,
-        false,
-        true
-      ],
-      "title": "\ud83c\udfa5 Broadcast Video Combine (H.264 MP4 + Stereo Audio)"
+      "widgets_values": {
+        "frame_rate": 24,
+        "loop_count": 0,
+        "filename_prefix": "RAVEN_Cinema/scene",
+        "format": "video/h264-mp4",
+        "pix_fmt": "yuv420p",
+        "crf": 19,
+        "save_metadata": true,
+        "trim_to_audio": false,
+        "pingpong": "yuv420p",
+        "save_output": 19,
+        "videopreview": true
+      },
+      "widgets_values_named": {
+        "frame_rate": 24,
+        "loop_count": 0,
+        "filename_prefix": "RAVEN_Cinema/scene",
+        "format": "video/h264-mp4",
+        "pix_fmt": "yuv420p",
+        "crf": 19,
+        "save_metadata": true,
+        "trim_to_audio": false,
+        "pingpong": "yuv420p",
+        "save_output": 19,
+        "videopreview": true
+      }
     },
     {
       "id": 60,
@@ -776,25 +857,80 @@
         160
       ],
       "flags": {},
-      "order": 14,
+      "order": 13,
       "mode": 0,
       "inputs": [
         {
+          "localized_name": "images",
           "name": "images",
           "type": "IMAGE",
           "link": 35
+        },
+        {
+          "localized_name": "filename_prefix",
+          "name": "filename_prefix",
+          "type": "STRING",
+          "widget": {
+            "name": "filename_prefix"
+          },
+          "link": null
+        },
+        {
+          "localized_name": "fps",
+          "name": "fps",
+          "type": "FLOAT",
+          "widget": {
+            "name": "fps"
+          },
+          "link": null
+        },
+        {
+          "localized_name": "lossless",
+          "name": "lossless",
+          "type": "BOOLEAN",
+          "widget": {
+            "name": "lossless"
+          },
+          "link": null
+        },
+        {
+          "localized_name": "quality",
+          "name": "quality",
+          "type": "INT",
+          "widget": {
+            "name": "quality"
+          },
+          "link": null
+        },
+        {
+          "localized_name": "method",
+          "name": "method",
+          "type": "COMBO",
+          "widget": {
+            "name": "method"
+          },
+          "link": null
         }
       ],
       "outputs": [
         {
+          "localized_name": "images",
           "name": "images",
           "type": "IMAGE",
           "slot_index": 0,
           "links": []
         }
       ],
+      "title": "\ud83d\uddbc\ufe0f Save Animated WEBP (Fast Preview)",
       "properties": {
-        "Node name for S&R": "SaveAnimatedWEBP"
+        "cnr_id": "comfy-core",
+        "ver": "0.33.0",
+        "Node name for S&R": "SaveAnimatedWEBP",
+        "ue_properties": {
+          "widget_ue_connectable": {},
+          "version": "7.8",
+          "input_ue_unconnectable": {}
+        }
       },
       "widgets_values": [
         "RAVEN_Cinema/preview",
@@ -803,7 +939,13 @@
         90,
         "default"
       ],
-      "title": "\ud83d\uddbc\ufe0f Save Animated WEBP (Fast Preview)"
+      "widgets_values_named": {
+        "filename_prefix": "RAVEN_Cinema/preview",
+        "fps": 24,
+        "lossless": false,
+        "quality": 90,
+        "method": "default"
+      }
     },
     {
       "id": 61,
@@ -814,33 +956,63 @@
       ],
       "size": [
         420,
-        100
+        112
       ],
       "flags": {},
-      "order": 15,
+      "order": 16,
       "mode": 0,
       "inputs": [
         {
+          "localized_name": "audio",
           "name": "audio",
           "type": "AUDIO",
           "link": 36
+        },
+        {
+          "localized_name": "filename_prefix",
+          "name": "filename_prefix",
+          "type": "STRING",
+          "widget": {
+            "name": "filename_prefix"
+          },
+          "link": null
+        },
+        {
+          "localized_name": "audioUI",
+          "name": "audioUI",
+          "type": "AUDIO_UI",
+          "widget": {
+            "name": "audioUI"
+          },
+          "link": null
         }
       ],
       "outputs": [
         {
+          "localized_name": "audio",
           "name": "audio",
           "type": "AUDIO",
           "slot_index": 0,
           "links": []
         }
       ],
+      "title": "\ud83d\udd0a Save Master Audio WAV",
       "properties": {
-        "Node name for S&R": "SaveAudio"
+        "cnr_id": "comfy-core",
+        "ver": "0.33.0",
+        "Node name for S&R": "SaveAudio",
+        "ue_properties": {
+          "widget_ue_connectable": {},
+          "version": "7.8",
+          "input_ue_unconnectable": {}
+        }
       },
       "widgets_values": [
         "RAVEN_Cinema/audio"
       ],
-      "title": "\ud83d\udd0a Save Master Audio WAV"
+      "widgets_values_named": {
+        "filename_prefix": "RAVEN_Cinema/audio"
+      }
     },
     {
       "id": 70,
@@ -854,17 +1026,637 @@
         400
       ],
       "flags": {},
-      "order": 16,
+      "order": 1,
       "mode": 0,
       "inputs": [],
       "outputs": [],
-      "properties": {},
+      "title": "\ud83d\udcd8 Director's Master Production Manual",
+      "properties": {
+        "ue_properties": {
+          "widget_ue_connectable": {},
+          "version": "7.8",
+          "input_ue_unconnectable": {}
+        }
+      },
       "widgets_values": [
         "MINIMAX H3 RAVEN MASTER PRODUCTION STUDIO \u2014 OPERATIONAL GUIDE\n\n1. \ud83c\udfac HOW TIMELINE DIRECTOR INGESTS (Prompt Box vs JSON vs Screenplay Files):\n   \u2022 Interactive Prompt Box: Type or paste multi-shot scripts directly with [Shot 1], [Shot 2], etc.\n   \u2022 JSON Ingestion: Paste comfyui_chain_plan.json or connect plan_json_input \u2014 it auto-detects JSON and parses shots instantly.\n   \u2022 File Path Ingestion: Type a local screenplay path (e.g. 'screenplays/halo_2005/') and it auto-loads scenes!\n   \u2022 Shot Mode Dropdown: Choose 'Continuous_Sequence (All Shots Combined)' for seamless streaming, or pick 'Shot 1', 'Shot 2' to test individual beats.\n\n2. \ud83e\udde0 ATTENTION ENGINE (Comfy-Kitchen / SDPA vs SageAttention):\n   \u2022 SageAttention 2.2 is 100% OPTIONAL: If SageAttention is not installed, RAVEN automatically falls back to ComfyUI's native PyTorch SDPA / Comfy-Kitchen backend without errors.\n   \u2022 Nobody needs to deal with tricky C++ compiler hassles if they prefer native ComfyUI attention.\n\n3. \u26a1 LoRA RULES & WHY NO TURBO LoRA:\n   \u2022 RAVEN already has its own dedicated 4-step consistency turbo LoRA baked directly into the model loader at strength 1.0!\n   \u2022 NEVER stack an 8-step Turbo LoRA on top: two different turbo schedulers will clash and distort timesteps.\n   \u2022 Content LoRAs work great: 35mm Cinema (CinematicMH3-V01), Red Dragon Camera, Combat LoRA, Realism LoRA.\n   \u2022 Genre / Stylistic LoRAs can be dynamically toggled via the LoRA stack according to scene needs.\n\n4. \ud83d\udce1 LIVE CONTINUOUS STREAMING & RTSP / RTMP:\n   \u2022 WebSocket fMP4: Streams live frames directly to your ComfyUI browser canvas as it generates.\n   \u2022 Local RTSP Server: Set broadcaster to 'RTSP_Stream_Local' and watch live in VLC (Media > Open Network Stream > rtsp://127.0.0.1:8554/live) or OBS Studio.\n   \u2022 RTMP Streaming: Set to 'RTMP_Stream_YouTube' or 'Twitch', enter your stream key, and broadcast 24/7 without frame drops."
       ],
+      "widgets_values_named": {
+        "text": "MINIMAX H3 RAVEN MASTER PRODUCTION STUDIO \u2014 OPERATIONAL GUIDE\n\n1. \ud83c\udfac HOW TIMELINE DIRECTOR INGESTS (Prompt Box vs JSON vs Screenplay Files):\n   \u2022 Interactive Prompt Box: Type or paste multi-shot scripts directly with [Shot 1], [Shot 2], etc.\n   \u2022 JSON Ingestion: Paste comfyui_chain_plan.json or connect plan_json_input \u2014 it auto-detects JSON and parses shots instantly.\n   \u2022 File Path Ingestion: Type a local screenplay path (e.g. 'screenplays/halo_2005/') and it auto-loads scenes!\n   \u2022 Shot Mode Dropdown: Choose 'Continuous_Sequence (All Shots Combined)' for seamless streaming, or pick 'Shot 1', 'Shot 2' to test individual beats.\n\n2. \ud83e\udde0 ATTENTION ENGINE (Comfy-Kitchen / SDPA vs SageAttention):\n   \u2022 SageAttention 2.2 is 100% OPTIONAL: If SageAttention is not installed, RAVEN automatically falls back to ComfyUI's native PyTorch SDPA / Comfy-Kitchen backend without errors.\n   \u2022 Nobody needs to deal with tricky C++ compiler hassles if they prefer native ComfyUI attention.\n\n3. \u26a1 LoRA RULES & WHY NO TURBO LoRA:\n   \u2022 RAVEN already has its own dedicated 4-step consistency turbo LoRA baked directly into the model loader at strength 1.0!\n   \u2022 NEVER stack an 8-step Turbo LoRA on top: two different turbo schedulers will clash and distort timesteps.\n   \u2022 Content LoRAs work great: 35mm Cinema (CinematicMH3-V01), Red Dragon Camera, Combat LoRA, Realism LoRA.\n   \u2022 Genre / Stylistic LoRAs can be dynamically toggled via the LoRA stack according to scene needs.\n\n4. \ud83d\udce1 LIVE CONTINUOUS STREAMING & RTSP / RTMP:\n   \u2022 WebSocket fMP4: Streams live frames directly to your ComfyUI browser canvas as it generates.\n   \u2022 Local RTSP Server: Set broadcaster to 'RTSP_Stream_Local' and watch live in VLC (Media > Open Network Stream > rtsp://127.0.0.1:8554/live) or OBS Studio.\n   \u2022 RTMP Streaming: Set to 'RTMP_Stream_YouTube' or 'Twitch', enter your stream key, and broadcast 24/7 without frame drops."
+      },
       "color": "#1f3a52",
-      "bgcolor": "#132333",
-      "title": "\ud83d\udcd8 Director's Master Production Manual"
+      "bgcolor": "#132333"
+    },
+    {
+      "id": 15,
+      "type": "RavenTimelineDirector",
+      "pos": [
+        1052.749587954894,
+        109.66728019526956
+      ],
+      "size": [
+        500,
+        560
+      ],
+      "flags": {},
+      "order": 2,
+      "mode": 0,
+      "inputs": [
+        {
+          "localized_name": "script_timeline",
+          "name": "script_timeline",
+          "type": "STRING",
+          "widget": {
+            "name": "script_timeline"
+          },
+          "link": null
+        },
+        {
+          "localized_name": "shot_mode",
+          "name": "shot_mode",
+          "type": "COMBO",
+          "widget": {
+            "name": "shot_mode"
+          },
+          "link": null
+        },
+        {
+          "localized_name": "auto_save_scenes_to_vault",
+          "name": "auto_save_scenes_to_vault",
+          "type": "BOOLEAN",
+          "widget": {
+            "name": "auto_save_scenes_to_vault"
+          },
+          "link": null
+        },
+        {
+          "localized_name": "plan_json_input",
+          "name": "plan_json_input",
+          "shape": 7,
+          "type": "STRING",
+          "widget": {
+            "name": "plan_json_input"
+          },
+          "link": null
+        },
+        {
+          "localized_name": "active_scene_id",
+          "name": "active_scene_id",
+          "shape": 7,
+          "type": "STRING",
+          "widget": {
+            "name": "active_scene_id"
+          },
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "localized_name": "active_prompt",
+          "name": "active_prompt",
+          "type": "STRING",
+          "slot_index": 0,
+          "links": [
+            15
+          ]
+        },
+        {
+          "localized_name": "subject_definitions",
+          "name": "subject_definitions",
+          "type": "STRING",
+          "slot_index": 1,
+          "links": []
+        },
+        {
+          "localized_name": "overall_soundscape",
+          "name": "overall_soundscape",
+          "type": "STRING",
+          "slot_index": 2,
+          "links": []
+        },
+        {
+          "localized_name": "detailed_description",
+          "name": "detailed_description",
+          "type": "STRING",
+          "slot_index": 3,
+          "links": []
+        },
+        {
+          "localized_name": "total_shots",
+          "name": "total_shots",
+          "type": "INT",
+          "slot_index": 4,
+          "links": []
+        },
+        {
+          "localized_name": "timeline_summary",
+          "name": "timeline_summary",
+          "type": "STRING",
+          "slot_index": 5,
+          "links": []
+        }
+      ],
+      "title": "\ud83c\udfac RAVEN Timeline Director \u2014 Halo_Trailer_90s (5 Shots)",
+      "properties": {
+        "cnr_id": "comfyui-workflow-encrypt",
+        "ver": "1.0.0",
+        "Node name for S&R": "RavenTimelineDirector",
+        "ue_properties": {
+          "widget_ue_connectable": {},
+          "version": "7.8",
+          "input_ue_unconnectable": {}
+        }
+      },
+      "widgets_values": [
+        "subject_definitions: <TrailerSubject> is the focal blockbuster protagonist in authentic cinematic attire, delivering authentic micro-acting. <CAPTAIN KEYES> is the seasoned 50-year-old UNSC naval commander in crisp charcoal officer uniform with gold trim, pipe clenched in teeth, weathered authoritative features, speaking in a deep commanding naval baritone with grave resolute composure. <MASTER CHIEF> is the towering 7-foot super-soldier in weathered olive-green MJOLNIR Mark V Powered Assault Armor with reflective gold visor, scarred titanium plating, speaking in a calm deep resonant bass with unshakeable stoic discipline and lethal tactical awareness.\n\nsummary: [reference generation] Halo_Trailer_90s continuous multi-shot cinema sequence.\n\nretention_analysis: Character facial identity, armor textures, and environmental acoustics fully preserved across all continuous cuts.\n\n[Shot 1] At 00:00.000, detailed_description: In EXT. ORBIT OF THE RING-WORLD HALO - DEEP SPACE, [0.00s-4.60s] Overhead aerial flyover soaring across the colossal, glowing inner curve of the alien ring-world Halo floating in dark purple space. In the background, Covenant war cruisers glide ominously past distant nebula gas clouds. [4.60s-9.78s] Camera glides through drifting starfield embers as massive slip-space fissures tear open with blinding blue energy arcs. [9.78s-14.38s] Slow smooth push towards the mysterious alien mega-structure, 35mm anamorphic prime lens at T1.5, cool cyan starlight rim illumination, and subtle organic lens flares. Sweeping High-Altitude Drone Flyover executed smoothly at 0.4m/s, 50mm and 35mm anamorphic prime lens at T1.5, shallow depth of field, Kodak Vision3 500T color science. Visual rendering: ASTROCINEMAV01K2T, photorealistic 8k cinema fidelity, volumetric shadows, natural physical micro-acting. [LoRA Directives: minimax/dr0nesh0t_aerial_flyover_000000500.safetensors: overhead aerial flyover, drone tracking, high altitude, skyscraper canyon, sweeping cityscape, soar, glide | minimax/CinematicMH3-V01.safetensors: ASTROCINEMAV01K2T, 50mm anamorphic lens, 35mm anamorphic prime lens, motivated tungsten practical lighting, cool window fill, shallow depth of field, fine 35mm grain, subtle halation, controlled highlight rolloff.]\n\n[Shot 2] At 00:03.000, detailed_description: In INT. PILLAR OF AUTUMN - BRIDGE - EMERGENCY LIGHTING, [0.00s-4.60s] Red emergency klaxons pulse across armored bridge consoles as sparks shower from overhead conduit pipes. Captain Keyes clutches his pipe, staring grimly out the viewport portal. [4.60s-9.78s] Medium close-up tracking shot on <CAPTAIN KEYES> at 05.0s: (in a deep commanding naval baritone) speaks: \"Cortana, wake the Spartan. We need him now.\", with precise visible lip-sync phoneme articulation and natural jaw movement. Master Chief steps forward out of the shadow into the key light, gold visor reflecting red klaxon flares. [9.78s-14.38s] Chief rolls his armored shoulders and chambers a 7.62mm round into his assault rifle with a crisp mechanical snap, shallow depth of field, motivated warm tungsten practical fill. Slow Push-In Medium Close-Up executed smoothly at 0.4m/s, 50mm and 35mm anamorphic prime lens at T1.5, shallow depth of field, Kodak Vision3 500T color science. Visual rendering: ASTROCINEMAV01K2T, photorealistic 8k cinema fidelity, volumetric shadows, natural physical micro-acting. [LoRA Directives: minimax/CinematicMH3-V01.safetensors: ASTROCINEMAV01K2T, 50mm anamorphic lens, 35mm anamorphic prime lens, motivated tungsten practical lighting, cool window fill, shallow depth of field, fine 35mm grain, subtle halation, controlled highlight rolloff | minimax/h3-realism-people-t2v-i2v-r2v.safetensors: photorealistic skin pores, subtle skin wrinkles, natural fabric weave texture, natural physical micro-acting.]\n\n[Shot 3] At 00:06.000, detailed_description: In INT. CORRIDOR BOMBARDMENT - SHIP INTERIOR, [0.00s-4.60s] Blast doors buckle inward with an explosive metal screech. A phalanx of blue-armored Elite warriors surges through billowing fire and smoke, firing blistering plasma rifle rounds. [4.60s-9.78s] lights: Explosive blue plasma detonations tear chunks out of the titanium bulkhead, illuminating the corridor in blinding flashes as UNSC marines return suppressing fire. [9.78s-14.38s] Rapid tracking forward rush capturing flying metal debris and volumetric sparks, 35mm anamorphic lens, high contrast shadow rolloff, and intense cinematic halation. Kinetic Tracking Combat Push executed smoothly at 0.4m/s, 50mm and 35mm anamorphic prime lens at T1.5, shallow depth of field, Kodak Vision3 500T color science. Visual rendering: ASTROCINEMAV01K2T, photorealistic 8k cinema fidelity, volumetric shadows, natural physical micro-acting. [LoRA Directives: minimax/FrameRush-MiniMax-H3_c1-st1300.safetensors: lights, explosions, debris flying through the air, smoke and fire, sparks trailing, high-speed camera rush, rapid forward thrust, car chase velocity, tactical operative, low-angle shot, dramatic backlighting, volumetric lighting | minimax/MiniMax_H3_Combat_LoRA.safetensors: combat, martial arts, gun-fu, melee brawl, punch, kick, grapple, judo throw, parry, knife strike | minimax/CinematicMH3-V01.safetensors: ASTROCINEMAV01K2T, 50mm anamorphic lens, 35mm anamorphic prime lens, motivated tungsten practical lighting, cool window fill, shallow depth of field, fine 35mm grain, subtle halation, controlled highlight rolloff.]\n\n[Shot 4] At 00:09.000, detailed_description: In EXT. HALO RING SURFACE - CRASH SITE CRATER - DUSK, [0.00s-4.60s] Master Chief sprints through exploding mud and plasma fire at full kinetic velocity, ducking under an energy sword swing and delivering a devastating titanium armored forearm strike to an Elite's jaw. [4.60s-9.78s] lights: Chief spins fluidly behind the alien soldier, executing a rapid judo hip throw into the dirt while double-tapping a plasma grenade onto a Covenant vehicle hull. The grenade ignites in a searing sapphire fireball. [9.78s-14.38s] Camera executes a sweeping 360-degree orbital combat track at 0.5m/s around Chief as he fires a burst from his dual Magnums, rain splashing off his green titanium chestplate, Kodak Vision3 500T color science. Kinetic 360-Degree Martial Arts & Gun-Fu Combat Tracking executed smoothly at 0.4m/s, 50mm and 35mm anamorphic prime lens at T1.5, shallow depth of field, Kodak Vision3 500T color science. Visual rendering: ASTROCINEMAV01K2T, photorealistic 8k cinema fidelity, volumetric shadows, natural physical micro-acting. [LoRA Directives: minimax/MiniMax_H3_Combat_LoRA.safetensors: combat, martial arts, gun-fu, melee brawl, punch, kick, grapple, judo throw, parry, knife strike | minimax/H3_Motion_BoosterV2.safetensors: kinetic velocity, sprint, rapid tackle, dynamic motion, fast tracking push, high-speed movement | minimax/CinematicMH3-V01.safetensors: ASTROCINEMAV01K2T, 50mm anamorphic lens, 35mm anamorphic prime lens, motivated tungsten practical lighting, cool window fill, shallow depth of field, fine 35mm grain, subtle halation, controlled highlight rolloff.]\n\n[Shot 5] At 00:12.000, detailed_description: In EXT. PACIFIC RING CLIFF EDGE - NIGHT, [0.00s-4.60s] Chief stands at the edge of a towering cliff overlooking an armada of Covenant cruisers gathering in the dark purple stormy sky. Wind whips across his scarred olive-green armor plates. [4.60s-9.78s] Medium close-up tracking shot on <MASTER CHIEF> at 06.0s: (in a calm deep resonant bass) speaks: \"Sir. Finishing this fight.\", with precise visible lip-sync phoneme articulation, his gold visor gleaming in lightning flashes. [9.78s-14.38s] Complete dramatic silence beat for one second\u2014followed by an explosive sub-bass SLAM as the camera violently pushes in on his reflective visor into total blackout. 35mm anamorphic lens at T1.5. Low-Angle Hero Push-In Stinger executed smoothly at 0.4m/s, 50mm and 35mm anamorphic prime lens at T1.5, shallow depth of field, Kodak Vision3 500T color science. Visual rendering: ASTROCINEMAV01K2T, photorealistic 8k cinema fidelity, volumetric shadows, natural physical micro-acting. [LoRA Directives: minimax/CinematicMH3-V01.safetensors: ASTROCINEMAV01K2T, 50mm anamorphic lens, 35mm anamorphic prime lens, motivated tungsten practical lighting, cool window fill, shallow depth of field, fine 35mm grain, subtle halation, controlled highlight rolloff | minimax/h3-realism-people-t2v-i2v-r2v.safetensors: photorealistic skin pores, subtle skin wrinkles, natural fabric weave texture, natural physical micro-acting | minimax/FrameRush-MiniMax-H3_c1-st1300.safetensors: lights, explosions, debris flying through the air, smoke and fire, sparks trailing, high-speed camera rush, rapid forward thrust, car chase velocity, tactical operative, low-angle shot, dramatic backlighting, volumetric lighting.]\n\noverall_soundscape: Directional open-air deep space acoustic resonance, deep 40Hz sub-bass orchestral horn BRAAAM drone vibrating through the void, distant slip-space rift crackles, and majestic trailer percussion build.\n\nCRITICAL RULES:\n- Continuous visual coherence, facial identity, and costume preservation throughout.\n- Authentic micro-acting: natural eye darts, subtle breath cadence, weapon recoil dynamics.\n- Precise visible lip-sync phoneme articulation and natural jaw movement for all dialogue.",
+        "Continuous_Sequence (All Shots Combined)",
+        true
+      ],
+      "widgets_values_named": {
+        "script_timeline": "subject_definitions: <LEAD_A> is the focal protagonist in cinematic attire visible in @char1 and <LEAD_B> is the secondary lead visible in @char2.\n\nsummary: [reference generation] The target sequence captures an intense dramatic exchange between two leads.\n\nretention_analysis: <LEAD_A> (present throughout): fully_preserved. <LEAD_B> (present throughout): fully_preserved.\n\n[Shot 1] At 00:00.000, detailed_description: [0.00s-3.13s] Act I (Spatial Framing & Atmosphere): Camera opens on an intimate establishing medium shot with volumetric tungsten rim lighting catching ambient atmospheric dust...\n\n[Shot 2] At 00:03.000, detailed_description: [3.13s-6.27s] Act II (Physical Choreography & Quoted Dialogue): Smooth tracking push-in as <LEAD_A> steps closer with intense micro-acting focus, saying: \"Are you sure about this?\" with visible phoneme lip-sync...\n\ncamera_movement: Slow steadycam push-in transitioning to a gentle orbital arc, 35mm anamorphic prime lens at T1.5 with shallow depth of field.\n\nlighting_and_atmosphere: High-contrast chiaroscuro lighting, deep shadow rolloff, natural cinematic lens flare.\n\noverall_soundscape: Intimate interior room tone RT60=0.35s, soft fabric rustle, warm low-frequency 45Hz sub-bass presence, crisp clear dialogue without muffling.\n\nnon_diegetic_music: N/A\n\nCRITICAL RULES:\n- Consistent facial identity and wardrobe throughout.\n- Precise visible lip-sync phoneme articulation and natural jaw cadence.",
+        "shot_mode": "Continuous_Sequence (All Shots Combined)",
+        "auto_save_scenes_to_vault": true,
+        "plan_json_input": "{\n  \"defaults\": {\n    \"duration_seconds\": 14.375,\n    \"steps\": 8\n  },\n  \"shots\": [\n    {\n      \"id\": \"Halo_Action_001_00m00s_to_00m14s\",\n      \"title\": \"Halo (2005 - Garland / Bungie) - INT. CINEMATIC SCENE - CONTINUOUS\",\n      \"prompt\": \"subject_definitions: <MASTER CHIEF> is the towering 7-foot super-soldier in weathered olive-green MJOLNIR Mark V Powered Assault Armor with reflective gold visor, scarred titanium plating, speaking in a calm deep resonant bass with unshakeable stoic discipline and lethal tactical awareness and <SPARTAN> is the cybernetically augmented super-soldier in heavy MJOLNIR powered armor with gold faceplate visor, speaking in a clipped precise military cadence. detailed_description: In INT. CINEMATIC SCENE - CONTINUOUS, [0.00s-4.60s] Camera establishes int. cinematic scene - continuous: HALO Alex Garland 2/6/05 2 . A series of scorched snapshots. Fragments. As memory. This is MASTER CHIEF'S DREAM. OPEN ON a SPARTAN HELMET, and a REFLECTION in its visor. In the reflection, we see buildings. The design and architecture of the buildings tell us this is the distant future. And twin suns tell us this is not Earth. The suns are low in the sky, and bathing the landscape blood red. SNAP BACK to show the full figure of the SPARTAN. Seven foot tall, clad head-to-toe in MJOLNIR armor, holding an MA5B ASSAULT RIFLE -MASTER CHIEF. SNAP BACK AGAIN to reveal, behind MASTER CHIEF, another fifty SPARTAN WARRIORS. All the SPARTANS have their gaze directed at the skies ... where a vast shadow or cloud is eclipsing the twin suns. A shadow which resolves itself into literally thousands of COVENANT DROP-SHIPS. CUT TO A BATTLEFIELD. The buildings are now destroyed. Skeletal steel frames push from rubble, providing only a suggestion of the structures that once stood. Intimate architectural interior of INT. CINEMATIC SCENE - CONTINUOUS: realistic set dressing, prop arrangement, and physical materials. In the background, ambient interior environmental elements remain active and alive. [4.60s-9.78s] Across this wasteland, the SPARTANS and the COVENANT are locked in ferocious combat. The SPARTANS are super-warriors. Combat machines -except that beneath their armor is genetically-refined human flesh and blood. Despite their physical size, they are fast. As we watch them TURN-AIM-FIRE, the speed of their reactions is unnatural. They seem fuelled by nitrous oxide and amphetamines. And there is something HYPNOTIC about the way they fight. Amidst the chaos, there are patterns. Across the battlefield, we can see PRECISE MOVEMENTS echoed from SPARTAN to SPARTAN. The same motion in the way a weapon is raised, the leap and roll to avoid an explosion. The impression is of method within the madness of no-holds barred combat. The SPARTAN warrior training is embedded deep within them. Almost coded. The COVENANT provide a contrast. Among the various species that make up the alien ranks, we can see the tall and regal ELITES, the massive HUNTERS, the gorilla-sized GRUNTS, the thin and feral JACKALS. And they all fight with their own brand of specialized ULTRAVIOLENCE. Less controlled than their human enemy, they are zealots, rabid. They roar as they charge, plasma blazing from their weaponry. In close quarters, they tear and rip and claw. [9.78s-14.38s] Many more of the alien warriors are falling and dying. But they can afford it. In comparison to the SPARTANS, the COVENANT are far, far greater in number. As we watch the scene unfold, something becomes clear. The tide of the battle is turning inexorably against the humans. CUT TO MASTER CHIEF maintaining a barrage of fire as the SPARTANS to the left and right of him are lacerated by plasma fire. CUT TO A SPARTAN as a plasma grenade sticks to his chest. He doubles up to protect his brothers -then flies apart as the grenade explodes. CUT TO Another SPARTAN walking: dazed, blackened, blood-smeared, half his armor blown from his body, half his arm hanging useless at his side. CUT TO A group of THREE SPARTANS driving a WARTHOG VEHICLE -one driving, one on shotgun, one on the rear canon -as they break ranks to CHARGE the enemy... then skid, roll and die under a rain of fire. Here, and throughout, the combat feels real. Hard, bloody, and brutal. CUT TO The city burning. CUT TO The twin suns blazing. CUT TO A black screen, and sudden silence. Over this, a caption appears: CAPTION Year 2552. A coalition of alien species, the Covenant, are waging a genocidal holy war against mankind. The caption fades, to be replaced by: CAPTION Mankind is losing. Then FADE UP TO Kinetic Dynamic Combat Tracking executed smoothly at 0.4m/s, holding sharp focal plane on the subject, 50mm and 35mm anamorphic prime lens at T1.5, shallow depth of field, motivated 3-point cinematic lighting with soft key light, gentle diffused fill, and volumetric hair rim backlight., subtle halation, and rich organic lens flares. Visual rendering: ASTROCINEMAV01K2T, photorealistic 8k cinema fidelity, volumetric shadows, Kodak Vision3 500T color science, natural physical micro-acting. [LoRA Directives: Choreography: combat, martial arts, gun-fu, melee brawl, punch, kick, grapple, judo throw, parry, knife strike; visceral martial arts hand strikes, close-quarters parries, dynamic physical grapples | Kinetic Energy: kinetic velocity, sprint, rapid tackle, dynamic motion, fast tracking push, high-speed movement | Optical Grade: ASTROCINEMAV01K2T, 50mm anamorphic lens, 35mm anamorphic prime lens, motivated tungsten practical lighting, cool window fill, shallow depth of field, fine 35mm grain, subtle halation, controlled highlight rolloff; photorealistic skin pores, subtle skin wrinkles, natural fabric weave texture, natural physical micro-acting.] overall_soundscape: Heavy kinetic combat acoustic dynamics, visceral bone-cracking strikes, rapid air swishes, cloth rustling dynamically during maneuvers, sharp weapon slide clicks, heavy tactical boot footsteps, and deep 45Hz sub-bass punch impact resonance. Pristine centered vocal presence with natural acoustic enclosure.\",\n      \"duration_seconds\": 14.375,\n      \"shot_type\": \"Kinetic Dynamic Combat Tracking\",\n      \"mood\": \"High-Octane Action & Combat\",\n      \"recommended_loras\": [\n        {\n          \"file\": \"minimax/MiniMax_H3_Combat_LoRA.safetensors\",\n          \"weight\": 0.8,\n          \"role\": \"Combat Choreography, Martial Arts & Gun-Fu\",\n          \"triggers\": \"combat, martial arts, gun-fu, melee brawl, punch, kick, grapple, judo throw, parry, knife strike\",\n          \"visual_cue\": \"visceral martial arts hand strikes, close-quarters parries, dynamic physical grapples\"\n        },\n        {\n          \"file\": \"minimax/H3_Motion_BoosterV2.safetensors\",\n          \"weight\": 0.6,\n          \"role\": \"Kinetic Velocity & Dynamic Motion\",\n          \"triggers\": \"kinetic velocity, sprint, rapid tackle, dynamic motion, fast tracking push, high-speed movement\",\n          \"visual_cue\": \"explosive physical acceleration, fast camera tracking push, dynamic body momentum\"\n        },\n        {\n          \"file\": \"minimax/CinematicMH3-V01.safetensors\",\n          \"weight\": 0.55,\n          \"role\": \"Master Cinematography & Motivated Film Lighting (Cinema V2)\",\n          \"triggers\": \"ASTROCINEMAV01K2T, 50mm anamorphic lens, 35mm anamorphic prime lens, motivated tungsten practical lighting, cool window fill, shallow depth of field, fine 35mm grain, subtle halation, controlled highlight rolloff\",\n          \"visual_cue\": \"ASTROCINEMAV01K2T: 50mm anamorphic lens, motivated tungsten practical lighting, cool window fill, shallow depth of field, subtle halation and controlled highlight rolloff\"\n        },\n        {\n          \"file\": \"minimax/h3-realism-people-t2v-i2v-r2v.safetensors\",\n          \"weight\": 0.6,\n          \"role\": \"Photorealistic Skin Pores & Fabric Realism\",\n          \"triggers\": \"photorealistic skin pores, subtle skin wrinkles, natural fabric weave texture, natural physical micro-acting\",\n          \"visual_cue\": \"hyper-realistic skin texture, authentic facial pores, natural physical micro-reactions\"\n        }\n      ]\n    },\n    {\n      \"id\": \"Halo_Action_002_00m14s_to_00m28s\",\n      \"title\": \"Halo (2005 - Garland / Bungie) - INT. PILLAR OF AUTUMN/BRIDGE\",\n      \"prompt\": \"subject_definitions: <CAPTAIN KEYES> is the seasoned 50-year-old UNSC naval commander in crisp charcoal officer uniform with gold trim, pipe clenched in teeth, weathered authoritative features, speaking in a deep commanding naval baritone with grave resolute composure and <CORTANA> is the holographic luminous blue female AI entity with sleek digital circuitry flowing across her translucent form, speaking in an articulate calm resonant female tone with playful intelligence and underlying emotional vulnerability. detailed_description: In INT. PILLAR OF AUTUMN/BRIDGE, [0.00s-4.60s] Camera establishes int. pillar of autumn/bridge: CAPTAIN KEYES looks out at the planet and its ring-moon. Behind him, the bridge crew are at their posts, manning the flight decks. A moment, as CAPTAIN KEYES surveys this scene. Then: None of the bridge crew respond. Expansive sci-fi starship command bridge with illuminated tactical holo-pedestals and reinforced panoramic viewport. In the background, flight crew officers in naval uniforms man glowing navigational consoles and monitor sensor readouts. [4.60s-9.78s] Instead, he is replied by a female voice -the voice of the Pillar Of Autumn's AI. (beat) As for whether we lost them... THROUGH THE BRIDGE PORTAL we can see multiple SLIP-SPACE fissures, similar to the one from which Pillar Of Autumn appeared. And through each fissure, COVENANT CAPITAL SHIPS are appearing. Medium close-up tracking shot on <CAPTAIN KEYES> at 04.6s: (in a deep commanding authoritative English baritone) speaks: \\\"Cortana.\\\", with precise visible lip-sync phoneme articulation and natural jaw movement. Over-the-shoulder reverse angle focusing on <CORTANA> at 07.2s: (in a calm resonant electronic English female tone) speaks: \\\"Yes, sir.\\\", with precise visible lip-sync phoneme articulation and natural jaw movement. [9.78s-14.38s] The face of CAPTAIN KEYES is stone. Unreadable. Copy, CORTANA sir. I'm already on it. Medium Cinematic Push-In executed smoothly at 0.4m/s, holding sharp focal plane on the subject, 50mm and 35mm anamorphic prime lens at T1.5, shallow depth of field, motivated cool-cyan holographic displays with deep cobalt window fill and dramatic amber status rim lighting., subtle halation, and rich organic lens flares. Visual rendering: ASTROCINEMAV01K2T, photorealistic 8k cinema fidelity, volumetric shadows, Kodak Vision3 500T color science, natural physical micro-acting. [LoRA Directives: Optical Grade: ASTROCINEMAV01K2T, 50mm anamorphic lens, 35mm anamorphic prime lens, motivated tungsten practical lighting, cool window fill, shallow depth of field, fine 35mm grain, subtle halation, controlled highlight rolloff; photorealistic skin pores, subtle skin wrinkles, natural fabric weave texture, natural physical micro-acting.] overall_soundscape: Intimate command bridge room boundary decay (RT60=0.45s), deep 40Hz sub-bass engine turbine hum vibrating through the steel deckplates, rhythmic electronic terminal telemetry chirps, soft ambient air circulation hum, and subtle digital holographic projection buzz. Centered English dialogue presence: at 04.6s, <CAPTAIN KEYES>'s centered speech is prioritized with crystal clarity, followed by at 07.2s, <CORTANA>'s centered speech is prioritized with crystal clarity without background acoustic clipping.\",\n      \"duration_seconds\": 14.375,\n      \"shot_type\": \"Medium Cinematic Push-In\",\n      \"mood\": \"Dramatic Narrative Cinema\",\n      \"recommended_loras\": [\n        {\n          \"file\": \"minimax/CinematicMH3-V01.safetensors\",\n          \"weight\": 0.55,\n          \"role\": \"Master Cinematography & Motivated Film Lighting (Cinema V2)\",\n          \"triggers\": \"ASTROCINEMAV01K2T, 50mm anamorphic lens, 35mm anamorphic prime lens, motivated tungsten practical lighting, cool window fill, shallow depth of field, fine 35mm grain, subtle halation, controlled highlight rolloff\",\n          \"visual_cue\": \"ASTROCINEMAV01K2T: 50mm anamorphic lens, motivated tungsten practical lighting, cool window fill, shallow depth of field, subtle halation and controlled highlight rolloff\"\n        },\n        {\n          \"file\": \"minimax/h3-realism-people-t2v-i2v-r2v.safetensors\",\n          \"weight\": 0.6,\n          \"role\": \"Photorealistic Skin Pores & Fabric Realism\",\n          \"triggers\": \"photorealistic skin pores, subtle skin wrinkles, natural fabric weave texture, natural physical micro-acting\",\n          \"visual_cue\": \"hyper-realistic skin texture, authentic facial pores, natural physical micro-reactions\"\n        }\n      ]\n    },\n    {\n      \"id\": \"Halo_Action_003_00m28s_to_00m43s\",\n      \"title\": \"Halo (2005 - Garland / Bungie) - INT. PILLAR OF AUTUMN/LOWER DECK\",\n      \"prompt\": \"subject_definitions: <CORTANA> is the holographic luminous blue female AI entity with sleek digital circuitry flowing across her translucent form, speaking in an articulate calm resonant female tone with playful intelligence and underlying emotional vulnerability and <MAJOR SILVA> is the intense hardened ODST Major in black tactical shock trooper armor with scarred jaw, speaking in a sharp aggressive military bark. detailed_description: In INT. PILLAR OF AUTUMN/LOWER DECK, [0.00s-4.60s] Camera establishes int. pillar of autumn/lower deck: An alert sounds throughout the ship. Expansive sci-fi starship command bridge with illuminated tactical holo-pedestals and reinforced panoramic viewport. In the background, flight crew officers in naval uniforms man glowing navigational consoles and monitor sensor readouts. [4.60s-9.78s] HELLJUMPERS (shout as one) Sir, yes SIR. Medium close-up tracking shot on <CORTANA> at 04.6s: (in a calm resonant electronic English female tone) speaks: \\\"All hands to combat posts. All hands to combat posts. Prepare...\\\", with precise visible lip-sync phoneme articulation and natural jaw movement. Over-the-shoulder reverse angle focusing on <MAJOR SILVA> at 07.2s: (in a crisp clear English vocal delivery) speaks: \\\"Helljumpers. You heard it. There's a shit storm coming.\\\", with precise visible lip-sync phoneme articulation and natural jaw movement. [9.78s-14.38s] MAJOR SILVA regards them a couple of beats. Then smiles. Medium Cinematic Push-In executed smoothly at 0.4m/s, holding sharp focal plane on the subject, 50mm and 35mm anamorphic prime lens at T1.5, shallow depth of field, motivated cool-cyan holographic displays with deep cobalt window fill and dramatic amber status rim lighting., subtle halation, and rich organic lens flares. Visual rendering: ASTROCINEMAV01K2T, photorealistic 8k cinema fidelity, volumetric shadows, Kodak Vision3 500T color science, natural physical micro-acting. [LoRA Directives: Optical Grade: ASTROCINEMAV01K2T, 50mm anamorphic lens, 35mm anamorphic prime lens, motivated tungsten practical lighting, cool window fill, shallow depth of field, fine 35mm grain, subtle halation, controlled highlight rolloff; photorealistic skin pores, subtle skin wrinkles, natural fabric weave texture, natural physical micro-acting.] overall_soundscape: Intimate command bridge room boundary decay (RT60=0.45s), deep 40Hz sub-bass engine turbine hum vibrating through the steel deckplates, rhythmic electronic terminal telemetry chirps, soft ambient air circulation hum, and subtle digital holographic projection buzz. Centered English dialogue presence: at 04.6s, <CORTANA>'s centered speech is prioritized with crystal clarity, followed by at 07.2s, <MAJOR SILVA>'s centered speech is prioritized with crystal clarity without background acoustic clipping.\",\n      \"duration_seconds\": 14.375,\n      \"shot_type\": \"Medium Cinematic Push-In\",\n      \"mood\": \"Dramatic Narrative Cinema\",\n      \"recommended_loras\": [\n        {\n          \"file\": \"minimax/CinematicMH3-V01.safetensors\",\n          \"weight\": 0.55,\n          \"role\": \"Master Cinematography & Motivated Film Lighting (Cinema V2)\",\n          \"triggers\": \"ASTROCINEMAV01K2T, 50mm anamorphic lens, 35mm anamorphic prime lens, motivated tungsten practical lighting, cool window fill, shallow depth of field, fine 35mm grain, subtle halation, controlled highlight rolloff\",\n          \"visual_cue\": \"ASTROCINEMAV01K2T: 50mm anamorphic lens, motivated tungsten practical lighting, cool window fill, shallow depth of field, subtle halation and controlled highlight rolloff\"\n        },\n        {\n          \"file\": \"minimax/h3-realism-people-t2v-i2v-r2v.safetensors\",\n          \"weight\": 0.6,\n          \"role\": \"Photorealistic Skin Pores & Fabric Realism\",\n          \"triggers\": \"photorealistic skin pores, subtle skin wrinkles, natural fabric weave texture, natural physical micro-acting\",\n          \"visual_cue\": \"hyper-realistic skin texture, authentic facial pores, natural physical micro-reactions\"\n        }\n      ]\n    },\n    {\n      \"id\": \"Halo_Action_004_00m43s_to_00m57s\",\n      \"title\": \"Halo (2005 - Garland / Bungie) - INT. PILLAR OF AUTUMN/BRIDGE\",\n      \"prompt\": \"subject_definitions: <CAPTAIN KEYES> is the seasoned 50-year-old UNSC naval commander in crisp charcoal officer uniform with gold trim, pipe clenched in teeth, weathered authoritative features, speaking in a deep commanding naval baritone with grave resolute composure and <CORTANA> is the holographic luminous blue female AI entity with sleek digital circuitry flowing across her translucent form, speaking in an articulate calm resonant female tone with playful intelligence and underlying emotional vulnerability. detailed_description: In INT. PILLAR OF AUTUMN/BRIDGE, [0.00s-4.60s] Camera establishes int. pillar of autumn/bridge: CAPTAIN KEYES looks out as the stream of tiny fighter craft, dwarfed in both size and number by the approaching enemy vessels. The first of them are already being engaged by Covenant fighters. The battle has begun. But CAPTAIN KEYES is looking beyond it, to HALO. (puzzled beat) And ... there's something strange. Expansive sci-fi starship command bridge with illuminated tactical holo-pedestals and reinforced panoramic viewport. In the background, flight crew officers in naval uniforms man glowing navigational consoles and monitor sensor readouts. [4.60s-9.78s] It's nitrogen and oxygen-rich. Life supporting. (MORE) someone. (processing beat) But no sentient life-forms appear on scan. KEYES nods. CUT TO ., MASTER CHIEF'S DREAM We are back under the blood-red twin suns. This is CLOSE QUARTERS COMBAT with the COVENANT. Medium close-up tracking shot on <CAPTAIN KEYES> at 04.6s: (in a deep commanding authoritative English baritone) speaks: \\\"Cortana -what is that structure ahead?\\\", with precise visible lip-sync phoneme articulation and natural jaw movement. Over-the-shoulder reverse angle focusing on <CORTANA> at 07.2s: (in a calm resonant electronic English female tone) speaks: \\\"Unknown. Artificial.\\\", with precise visible lip-sync phoneme articulation and natural jaw movement. [9.78s-14.38s] And MASTER CHIEF seems to be alone in this fight. The last of the SPARTANS. He fires into the faces and chests of the Covenant troops at near point-blank range. He is completely surrounded by the aliens. Beneath his feet is what appears a tangled carpet of bodies. Then the image starts to bleach. To WHITE OUT. Kinetic Dynamic Combat Tracking executed smoothly at 0.4m/s, holding sharp focal plane on the subject, 50mm and 35mm anamorphic prime lens at T1.5, shallow depth of field, motivated cool-cyan holographic displays with deep cobalt window fill and dramatic amber status rim lighting., subtle halation, and rich organic lens flares. Visual rendering: ASTROCINEMAV01K2T, photorealistic 8k cinema fidelity, volumetric shadows, Kodak Vision3 500T color science, natural physical micro-acting. [LoRA Directives: Choreography: combat, martial arts, gun-fu, melee brawl, punch, kick, grapple, judo throw, parry, knife strike; visceral martial arts hand strikes, close-quarters parries, dynamic physical grapples | Kinetic Energy: kinetic velocity, sprint, rapid tackle, dynamic motion, fast tracking push, high-speed movement | Optical Grade: ASTROCINEMAV01K2T, 50mm anamorphic lens, 35mm anamorphic prime lens, motivated tungsten practical lighting, cool window fill, shallow depth of field, fine 35mm grain, subtle halation, controlled highlight rolloff; photorealistic skin pores, subtle skin wrinkles, natural fabric weave texture, natural physical micro-acting.] overall_soundscape: Intimate command bridge room boundary decay (RT60=0.45s), deep 40Hz sub-bass engine turbine hum vibrating through the steel deckplates, rhythmic electronic terminal telemetry chirps, soft ambient air circulation hum, and subtle digital holographic projection buzz. Centered English dialogue presence: at 04.6s, <CAPTAIN KEYES>'s centered speech is prioritized with crystal clarity, followed by at 07.2s, <CORTANA>'s centered speech is prioritized with crystal clarity without background acoustic clipping.\",\n      \"duration_seconds\": 14.375,\n      \"shot_type\": \"Kinetic Dynamic Combat Tracking\",\n      \"mood\": \"High-Octane Action & Combat\",\n      \"recommended_loras\": [\n        {\n          \"file\": \"minimax/MiniMax_H3_Combat_LoRA.safetensors\",\n          \"weight\": 0.8,\n          \"role\": \"Combat Choreography, Martial Arts & Gun-Fu\",\n          \"triggers\": \"combat, martial arts, gun-fu, melee brawl, punch, kick, grapple, judo throw, parry, knife strike\",\n          \"visual_cue\": \"visceral martial arts hand strikes, close-quarters parries, dynamic physical grapples\"\n        },\n        {\n          \"file\": \"minimax/H3_Motion_BoosterV2.safetensors\",\n          \"weight\": 0.6,\n          \"role\": \"Kinetic Velocity & Dynamic Motion\",\n          \"triggers\": \"kinetic velocity, sprint, rapid tackle, dynamic motion, fast tracking push, high-speed movement\",\n          \"visual_cue\": \"explosive physical acceleration, fast camera tracking push, dynamic body momentum\"\n        },\n        {\n          \"file\": \"minimax/CinematicMH3-V01.safetensors\",\n          \"weight\": 0.55,\n          \"role\": \"Master Cinematography & Motivated Film Lighting (Cinema V2)\",\n          \"triggers\": \"ASTROCINEMAV01K2T, 50mm anamorphic lens, 35mm anamorphic prime lens, motivated tungsten practical lighting, cool window fill, shallow depth of field, fine 35mm grain, subtle halation, controlled highlight rolloff\",\n          \"visual_cue\": \"ASTROCINEMAV01K2T: 50mm anamorphic lens, motivated tungsten practical lighting, cool window fill, shallow depth of field, subtle halation and controlled highlight rolloff\"\n        },\n        {\n          \"file\": \"minimax/h3-realism-people-t2v-i2v-r2v.safetensors\",\n          \"weight\": 0.6,\n          \"role\": \"Photorealistic Skin Pores & Fabric Realism\",\n          \"triggers\": \"photorealistic skin pores, subtle skin wrinkles, natural fabric weave texture, natural physical micro-acting\",\n          \"visual_cue\": \"hyper-realistic skin texture, authentic facial pores, natural physical micro-reactions\"\n        }\n      ]\n    },\n    {\n      \"id\": \"Halo_Action_005_00m57s_to_01m11s\",\n      \"title\": \"Halo (2005 - Garland / Bungie) - INT. PILLAR OF AUTUMN\",\n      \"prompt\": \"subject_definitions: <CORTANA> is the holographic luminous blue female AI entity with sleek digital circuitry flowing across her translucent form, speaking in an articulate calm resonant female tone with playful intelligence and underlying emotional vulnerability and <MASTER CHIEF> is the towering 7-foot super-soldier in weathered olive-green MJOLNIR Mark V Powered Assault Armor with reflective gold visor, scarred titanium plating, speaking in a calm deep resonant bass with unshakeable stoic discipline and lethal tactical awareness. detailed_description: In INT. PILLAR OF AUTUMN, [0.00s-4.60s] Camera establishes int. pillar of autumn: MASTER CHIEF is moving fast through the Pillar of Autumn. As he runs, the entire ship is vibrating and shaking from the Covenant attack. Expansive sci-fi starship command bridge with illuminated tactical holo-pedestals and reinforced panoramic viewport. In the background, flight crew officers in naval uniforms man glowing navigational consoles and monitor sensor readouts. [4.60s-9.78s] Ahead, an explosion rips through heavy blast doors, tearing them open. On the other side of the blast doors a furnacelike fire is raging. into a ROUTE CORRIDOR... Medium close-up tracking shot on <CORTANA> at 04.6s: (in a calm resonant electronic English female tone) speaks: \\\"Imminent breach in sectors seven and twelve. All available combat and...\\\", with precise visible lip-sync phoneme articulation and natural jaw movement. Over-the-shoulder reverse angle focusing on <MASTER CHIEF> at 07.2s: (in a crisp clear English vocal delivery) speaks: \\\"ducks through an ACCESS TUNNEL, emerging back\\\", with precise visible lip-sync phoneme articulation and natural jaw movement. [9.78s-14.38s] =\\\" INT. PILLAR OF AUTUMN/ROUTE CORRIDOR ... where a handful of MARINES are crouched behind a makeshift barricade, in an intense fire fight. Kinetic Dynamic Combat Tracking executed smoothly at 0.4m/s, holding sharp focal plane on the subject, 50mm and 35mm anamorphic prime lens at T1.5, shallow depth of field, motivated cool-cyan holographic displays with deep cobalt window fill and dramatic amber status rim lighting., subtle halation, and rich organic lens flares. Visual rendering: ASTROCINEMAV01K2T, photorealistic 8k cinema fidelity, volumetric shadows, Kodak Vision3 500T color science, natural physical micro-acting. [LoRA Directives: Choreography: combat, martial arts, gun-fu, melee brawl, punch, kick, grapple, judo throw, parry, knife strike; visceral martial arts hand strikes, close-quarters parries, dynamic physical grapples | Kinetic Energy: kinetic velocity, sprint, rapid tackle, dynamic motion, fast tracking push, high-speed movement | Optical Grade: ASTROCINEMAV01K2T, 50mm anamorphic lens, 35mm anamorphic prime lens, motivated tungsten practical lighting, cool window fill, shallow depth of field, fine 35mm grain, subtle halation, controlled highlight rolloff; photorealistic skin pores, subtle skin wrinkles, natural fabric weave texture, natural physical micro-acting.] overall_soundscape: Intimate command bridge room boundary decay (RT60=0.45s), deep 40Hz sub-bass engine turbine hum vibrating through the steel deckplates, rhythmic electronic terminal telemetry chirps, soft ambient air circulation hum, and subtle digital holographic projection buzz. Centered English dialogue presence: at 04.6s, <CORTANA>'s centered speech is prioritized with crystal clarity, followed by at 07.2s, <MASTER CHIEF>'s centered speech is prioritized with crystal clarity without background acoustic clipping.\",\n      \"duration_seconds\": 14.375,\n      \"shot_type\": \"Kinetic Dynamic Combat Tracking\",\n      \"mood\": \"High-Octane Action & Combat\",\n      \"recommended_loras\": [\n        {\n          \"file\": \"minimax/MiniMax_H3_Combat_LoRA.safetensors\",\n          \"weight\": 0.8,\n          \"role\": \"Combat Choreography, Martial Arts & Gun-Fu\",\n          \"triggers\": \"combat, martial arts, gun-fu, melee brawl, punch, kick, grapple, judo throw, parry, knife strike\",\n          \"visual_cue\": \"visceral martial arts hand strikes, close-quarters parries, dynamic physical grapples\"\n        },\n        {\n          \"file\": \"minimax/H3_Motion_BoosterV2.safetensors\",\n          \"weight\": 0.6,\n          \"role\": \"Kinetic Velocity & Dynamic Motion\",\n          \"triggers\": \"kinetic velocity, sprint, rapid tackle, dynamic motion, fast tracking push, high-speed movement\",\n          \"visual_cue\": \"explosive physical acceleration, fast camera tracking push, dynamic body momentum\"\n        },\n        {\n          \"file\": \"minimax/CinematicMH3-V01.safetensors\",\n          \"weight\": 0.55,\n          \"role\": \"Master Cinematography & Motivated Film Lighting (Cinema V2)\",\n          \"triggers\": \"ASTROCINEMAV01K2T, 50mm anamorphic lens, 35mm anamorphic prime lens, motivated tungsten practical lighting, cool window fill, shallow depth of field, fine 35mm grain, subtle halation, controlled highlight rolloff\",\n          \"visual_cue\": \"ASTROCINEMAV01K2T: 50mm anamorphic lens, motivated tungsten practical lighting, cool window fill, shallow depth of field, subtle halation and controlled highlight rolloff\"\n        },\n        {\n          \"file\": \"minimax/h3-realism-people-t2v-i2v-r2v.safetensors\",\n          \"weight\": 0.6,\n          \"role\": \"Photorealistic Skin Pores & Fabric Realism\",\n          \"triggers\": \"photorealistic skin pores, subtle skin wrinkles, natural fabric weave texture, natural physical micro-acting\",\n          \"visual_cue\": \"hyper-realistic skin texture, authentic facial pores, natural physical micro-reactions\"\n        }\n      ]\n    },\n    {\n      \"id\": \"Halo_Action_006_01m11s_to_01m26s\",\n      \"title\": \"Halo (2005 - Garland / Bungie) - INT. PILLAR OF AUTUMN/BRIDGE\",\n      \"prompt\": \"subject_definitions: <CORTANA> is the holographic luminous blue female AI entity with sleek digital circuitry flowing across her translucent form, speaking in an articulate calm resonant female tone with playful intelligence and underlying emotional vulnerability and <CAPTAIN KEYES> is the seasoned 50-year-old UNSC naval commander in crisp charcoal officer uniform with gold trim, pipe clenched in teeth, weathered authoritative features, speaking in a deep commanding naval baritone with grave resolute composure. detailed_description: In INT. PILLAR OF AUTUMN/BRIDGE, [0.00s-4.60s] Camera establishes int. pillar of autumn/bridge: Commotion on the bridge, as the FLIGHT DECK CREW desperately try to keep abreast of the collapsing ship systems. FLIGHT DECK CREWMAN Primary thrust engines off-line. Expansive sci-fi starship command bridge with illuminated tactical holo-pedestals and reinforced panoramic viewport. In the background, flight crew officers in naval uniforms man glowing navigational consoles and monitor sensor readouts. [4.60s-9.78s] Massive pressure loss on four portside decks, six-through-nine. Only CAPTAIN KEYES and.the voice of CORTANA register a tone of objective calm. FLIGHT DECK CREWMAN Sir! Medium close-up tracking shot on <CORTANA> at 04.6s: (in a calm resonant electronic English female tone) speaks: \\\"They're using our lifeboat airlocks to attach their boarding craft.\\\", with precise visible lip-sync phoneme articulation and natural jaw movement. Over-the-shoulder reverse angle focusing on <CAPTAIN KEYES> at 07.2s: (in a deep commanding authoritative English baritone) speaks: \\\"Blocking our way out as they make their way in. Smart...\\\", with precise visible lip-sync phoneme articulation and natural jaw movement. [9.78s-14.38s] We've lost main canon! At this moment, MASTER CHIEF enters. The Spartan is so tall that he has to duck to pass through the bridge entrance. Medium Cinematic Push-In executed smoothly at 0.4m/s, holding sharp focal plane on the subject, 50mm and 35mm anamorphic prime lens at T1.5, shallow depth of field, motivated cool-cyan holographic displays with deep cobalt window fill and dramatic amber status rim lighting., subtle halation, and rich organic lens flares. Visual rendering: ASTROCINEMAV01K2T, photorealistic 8k cinema fidelity, volumetric shadows, Kodak Vision3 500T color science, natural physical micro-acting. [LoRA Directives: Optical Grade: ASTROCINEMAV01K2T, 50mm anamorphic lens, 35mm anamorphic prime lens, motivated tungsten practical lighting, cool window fill, shallow depth of field, fine 35mm grain, subtle halation, controlled highlight rolloff; photorealistic skin pores, subtle skin wrinkles, natural fabric weave texture, natural physical micro-acting.] overall_soundscape: Intimate command bridge room boundary decay (RT60=0.45s), deep 40Hz sub-bass engine turbine hum vibrating through the steel deckplates, rhythmic electronic terminal telemetry chirps, soft ambient air circulation hum, and subtle digital holographic projection buzz. Centered English dialogue presence: at 04.6s, <CORTANA>'s centered speech is prioritized with crystal clarity, followed by at 07.2s, <CAPTAIN KEYES>'s centered speech is prioritized with crystal clarity without background acoustic clipping.\",\n      \"duration_seconds\": 14.375,\n      \"shot_type\": \"Medium Cinematic Push-In\",\n      \"mood\": \"Dramatic Narrative Cinema\",\n      \"recommended_loras\": [\n        {\n          \"file\": \"minimax/CinematicMH3-V01.safetensors\",\n          \"weight\": 0.55,\n          \"role\": \"Master Cinematography & Motivated Film Lighting (Cinema V2)\",\n          \"triggers\": \"ASTROCINEMAV01K2T, 50mm anamorphic lens, 35mm anamorphic prime lens, motivated tungsten practical lighting, cool window fill, shallow depth of field, fine 35mm grain, subtle halation, controlled highlight rolloff\",\n          \"visual_cue\": \"ASTROCINEMAV01K2T: 50mm anamorphic lens, motivated tungsten practical lighting, cool window fill, shallow depth of field, subtle halation and controlled highlight rolloff\"\n        },\n        {\n          \"file\": \"minimax/h3-realism-people-t2v-i2v-r2v.safetensors\",\n          \"weight\": 0.6,\n          \"role\": \"Photorealistic Skin Pores & Fabric Realism\",\n          \"triggers\": \"photorealistic skin pores, subtle skin wrinkles, natural fabric weave texture, natural physical micro-acting\",\n          \"visual_cue\": \"hyper-realistic skin texture, authentic facial pores, natural physical micro-reactions\"\n        }\n      ]\n    },\n    {\n      \"id\": \"Halo_Action_007_01m26s_to_01m40s\",\n      \"title\": \"Halo (2005 - Garland / Bungie) - INT. PILLAR OF AUTUMN/LOWER DECK\",\n      \"prompt\": \"subject_definitions: <MAJOR SILVA> is the intense hardened ODST Major in black tactical shock trooper armor with scarred jaw, speaking in a sharp aggressive military bark and <CAPTAIN KEYES> is the seasoned 50-year-old UNSC naval commander in crisp charcoal officer uniform with gold trim, pipe clenched in teeth, weathered authoritative features, speaking in a deep commanding naval baritone with grave resolute composure. detailed_description: In INT. PILLAR OF AUTUMN/LOWER DECK, [0.00s-4.60s] Camera establishes int. pillar of autumn/lower deck: The way they fight is qualitatively different from the MARINES. Expansive sci-fi starship command bridge with illuminated tactical holo-pedestals and reinforced panoramic viewport. In the background, flight crew officers in naval uniforms man glowing navigational consoles and monitor sensor readouts. [4.60s-9.78s] There is no sense of panic in the combat. No screaming as they take a hit. Medium close-up tracking shot on <MAJOR SILVA> at 04.6s: (in a crisp clear English vocal delivery) speaks: \\\"and the HELLJUMPERS are locked in their own savage fire-fight -hunched...\\\", with precise visible lip-sync phoneme articulation and natural jaw movement. Over-the-shoulder reverse angle focusing on <CAPTAIN KEYES> at 07.2s: (in a deep commanding authoritative English baritone) speaks: \\\"All units, this is your Captain speaking. I'm giving the order...\\\", with precise visible lip-sync phoneme articulation and natural jaw movement. [9.78s-14.38s] No scrabbling for a reload. HELLJUMPERS Sir, yes sir! Kinetic Dynamic Combat Tracking executed smoothly at 0.4m/s, holding sharp focal plane on the subject, 50mm and 35mm anamorphic prime lens at T1.5, shallow depth of field, motivated cool-cyan holographic displays with deep cobalt window fill and dramatic amber status rim lighting., subtle halation, and rich organic lens flares. Visual rendering: ASTROCINEMAV01K2T, photorealistic 8k cinema fidelity, volumetric shadows, Kodak Vision3 500T color science, natural physical micro-acting. [LoRA Directives: Choreography: combat, martial arts, gun-fu, melee brawl, punch, kick, grapple, judo throw, parry, knife strike; visceral martial arts hand strikes, close-quarters parries, dynamic physical grapples | Kinetic Energy: kinetic velocity, sprint, rapid tackle, dynamic motion, fast tracking push, high-speed movement | Optical Grade: ASTROCINEMAV01K2T, 50mm anamorphic lens, 35mm anamorphic prime lens, motivated tungsten practical lighting, cool window fill, shallow depth of field, fine 35mm grain, subtle halation, controlled highlight rolloff; photorealistic skin pores, subtle skin wrinkles, natural fabric weave texture, natural physical micro-acting.] overall_soundscape: Intimate command bridge room boundary decay (RT60=0.45s), deep 40Hz sub-bass engine turbine hum vibrating through the steel deckplates, rhythmic electronic terminal telemetry chirps, soft ambient air circulation hum, and subtle digital holographic projection buzz. Centered English dialogue presence: at 04.6s, <MAJOR SILVA>'s centered speech is prioritized with crystal clarity, followed by at 07.2s, <CAPTAIN KEYES>'s centered speech is prioritized with crystal clarity without background acoustic clipping.\",\n      \"duration_seconds\": 14.375,\n      \"shot_type\": \"Kinetic Dynamic Combat Tracking\",\n      \"mood\": \"High-Octane Action & Combat\",\n      \"recommended_loras\": [\n        {\n          \"file\": \"minimax/MiniMax_H3_Combat_LoRA.safetensors\",\n          \"weight\": 0.8,\n          \"role\": \"Combat Choreography, Martial Arts & Gun-Fu\",\n          \"triggers\": \"combat, martial arts, gun-fu, melee brawl, punch, kick, grapple, judo throw, parry, knife strike\",\n          \"visual_cue\": \"visceral martial arts hand strikes, close-quarters parries, dynamic physical grapples\"\n        },\n        {\n          \"file\": \"minimax/H3_Motion_BoosterV2.safetensors\",\n          \"weight\": 0.6,\n          \"role\": \"Kinetic Velocity & Dynamic Motion\",\n          \"triggers\": \"kinetic velocity, sprint, rapid tackle, dynamic motion, fast tracking push, high-speed movement\",\n          \"visual_cue\": \"explosive physical acceleration, fast camera tracking push, dynamic body momentum\"\n        },\n        {\n          \"file\": \"minimax/CinematicMH3-V01.safetensors\",\n          \"weight\": 0.55,\n          \"role\": \"Master Cinematography & Motivated Film Lighting (Cinema V2)\",\n          \"triggers\": \"ASTROCINEMAV01K2T, 50mm anamorphic lens, 35mm anamorphic prime lens, motivated tungsten practical lighting, cool window fill, shallow depth of field, fine 35mm grain, subtle halation, controlled highlight rolloff\",\n          \"visual_cue\": \"ASTROCINEMAV01K2T: 50mm anamorphic lens, motivated tungsten practical lighting, cool window fill, shallow depth of field, subtle halation and controlled highlight rolloff\"\n        },\n        {\n          \"file\": \"minimax/h3-realism-people-t2v-i2v-r2v.safetensors\",\n          \"weight\": 0.6,\n          \"role\": \"Photorealistic Skin Pores & Fabric Realism\",\n          \"triggers\": \"photorealistic skin pores, subtle skin wrinkles, natural fabric weave texture, natural physical micro-acting\",\n          \"visual_cue\": \"hyper-realistic skin texture, authentic facial pores, natural physical micro-reactions\"\n        }\n      ]\n    },\n    {\n      \"id\": \"Halo_Action_008_01m40s_to_01m55s\",\n      \"title\": \"Halo (2005 - Garland / Bungie) - INT. PILLAR OF AUTUMN/ROUTE TO LIFEBOATS\",\n      \"prompt\": \"subject_definitions: <MASTER CHIEF> is the towering 7-foot super-soldier in weathered olive-green MJOLNIR Mark V Powered Assault Armor with reflective gold visor, scarred titanium plating, speaking in a calm deep resonant bass with unshakeable stoic discipline and lethal tactical awareness and <CORTANA> is the holographic luminous blue female AI entity with sleek digital circuitry flowing across her translucent form, speaking in an articulate calm resonant female tone with playful intelligence and underlying emotional vulnerability. detailed_description: In INT. PILLAR OF AUTUMN/ROUTE TO LIFEBOATS, [0.00s-4.60s] Camera establishes int. pillar of autumn/route to lifeboats: MASTER CHIEF moves again through the Pillar of Autumn. He is armed now with an MASB assault rifle, making his way down a narrow SERVICE TUNNEL, dimly lit, lined with cabling. Ahead is a main corridor to the LIFE at the end of the dark tunnel ... BOATS. A bright frame ... into which steps a COVENANT SOLDIER. It's an ELITE. Tall, armored, athletic. alien equivalent of the SPARTAN. In a sense, the Perhaps the ELITE will move on again in a moment ... Expansive sci-fi starship command bridge with illuminated tactical holo-pedestals and reinforced panoramic viewport. In the background, flight crew officers in naval uniforms man glowing navigational consoles and monitor sensor readouts. [4.60s-9.78s] but it doesn't. MASTER CHIEF takes a cautious step. Then another. It is surprising that the apparently heavy plated armor can allow for stealth, but either through his strength or the armor's design, MASTER CHIEF moves forwards silently. The ELITE still doesn't move on, but neither does it hear him coming. Now, just inside the door frame between the SERVICE TUNNEL and the MAIN CORRIDOR... MASTER CHIEF is close enough to reach out and touch the ELITE. And that's exactly what he does. Suddenly, a cobra strike -a classic game move, MASTER CHIEF strikes with the butt of his assault rifle, taking out ELITE'S shields ... and as the ELITE staggers back, MASTER CHIEF empties half a clip into the alien's torso. Medium close-up tracking shot on <MASTER CHIEF> at 04.6s: (in a crisp clear English vocal delivery) speaks: \\\"freezes.\\\", with precise visible lip-sync phoneme articulation and natural jaw movement. Over-the-shoulder reverse angle focusing on <CORTANA> at 07.2s: (in a impressed English delivery) speaks: \\\"Good work, Master Chief. I can tell I'm in... At the...\\\", with precise visible lip-sync phoneme articulation and natural jaw movement. [9.78s-14.38s] Thirty rounds fly through the gun in two seconds. As the ELITE drops -in a continuous movement, MASTER CHIEF steps out into the MAIN CORRIDOR, switching to his M6D HANDGUN -to confront four Covenant GRUNTS. MASTER CHIEF fires four times in rapid succession. Each shot finds its target. One of the Covenant foot-soldiers manages to get off a round -but only from squeezing his trigger as an involuntary death-reflex as he falls. Back on the assault rifle, MASTER CHIEF turns to check his six.. and the corridor is clear. Immediately, MASTER CHIEF reloads. MASTER CHIEF Are you talking to me? (beat) Feels kind of empty in here. CUT TO: Kinetic Dynamic Combat Tracking executed smoothly at 0.4m/s, holding sharp focal plane on the subject, 50mm and 35mm anamorphic prime lens at T1.5, shallow depth of field, motivated cool-cyan holographic displays with deep cobalt window fill and dramatic amber status rim lighting., subtle halation, and rich organic lens flares. Visual rendering: ASTROCINEMAV01K2T, photorealistic 8k cinema fidelity, volumetric shadows, Kodak Vision3 500T color science, natural physical micro-acting. [LoRA Directives: Choreography: combat, martial arts, gun-fu, melee brawl, punch, kick, grapple, judo throw, parry, knife strike; visceral martial arts hand strikes, close-quarters parries, dynamic physical grapples | Kinetic Energy: kinetic velocity, sprint, rapid tackle, dynamic motion, fast tracking push, high-speed movement | Optical Grade: ASTROCINEMAV01K2T, 50mm anamorphic lens, 35mm anamorphic prime lens, motivated tungsten practical lighting, cool window fill, shallow depth of field, fine 35mm grain, subtle halation, controlled highlight rolloff; photorealistic skin pores, subtle skin wrinkles, natural fabric weave texture, natural physical micro-acting.] overall_soundscape: Intimate command bridge room boundary decay (RT60=0.45s), deep 40Hz sub-bass engine turbine hum vibrating through the steel deckplates, rhythmic electronic terminal telemetry chirps, soft ambient air circulation hum, and subtle digital holographic projection buzz. Centered English dialogue presence: at 04.6s, <MASTER CHIEF>'s centered speech is prioritized with crystal clarity, followed by at 07.2s, <CORTANA>'s centered speech is prioritized with crystal clarity without background acoustic clipping.\",\n      \"duration_seconds\": 14.375,\n      \"shot_type\": \"Kinetic Dynamic Combat Tracking\",\n      \"mood\": \"High-Octane Action & Combat\",\n      \"recommended_loras\": [\n        {\n          \"file\": \"minimax/MiniMax_H3_Combat_LoRA.safetensors\",\n          \"weight\": 0.8,\n          \"role\": \"Combat Choreography, Martial Arts & Gun-Fu\",\n          \"triggers\": \"combat, martial arts, gun-fu, melee brawl, punch, kick, grapple, judo throw, parry, knife strike\",\n          \"visual_cue\": \"visceral martial arts hand strikes, close-quarters parries, dynamic physical grapples\"\n        },\n        {\n          \"file\": \"minimax/H3_Motion_BoosterV2.safetensors\",\n          \"weight\": 0.6,\n          \"role\": \"Kinetic Velocity & Dynamic Motion\",\n          \"triggers\": \"kinetic velocity, sprint, rapid tackle, dynamic motion, fast tracking push, high-speed movement\",\n          \"visual_cue\": \"explosive physical acceleration, fast camera tracking push, dynamic body momentum\"\n        },\n        {\n          \"file\": \"minimax/CinematicMH3-V01.safetensors\",\n          \"weight\": 0.55,\n          \"role\": \"Master Cinematography & Motivated Film Lighting (Cinema V2)\",\n          \"triggers\": \"ASTROCINEMAV01K2T, 50mm anamorphic lens, 35mm anamorphic prime lens, motivated tungsten practical lighting, cool window fill, shallow depth of field, fine 35mm grain, subtle halation, controlled highlight rolloff\",\n          \"visual_cue\": \"ASTROCINEMAV01K2T: 50mm anamorphic lens, motivated tungsten practical lighting, cool window fill, shallow depth of field, subtle halation and controlled highlight rolloff\"\n        },\n        {\n          \"file\": \"minimax/h3-realism-people-t2v-i2v-r2v.safetensors\",\n          \"weight\": 0.6,\n          \"role\": \"Photorealistic Skin Pores & Fabric Realism\",\n          \"triggers\": \"photorealistic skin pores, subtle skin wrinkles, natural fabric weave texture, natural physical micro-acting\",\n          \"visual_cue\": \"hyper-realistic skin texture, authentic facial pores, natural physical micro-reactions\"\n        }\n      ]\n    },\n    {\n      \"id\": \"Halo_Action_009_01m55s_to_02m09s\",\n      \"title\": \"Halo (2005 - Garland / Bungie) - INT. PILLAR OF AUTUMN/CORRIDOR OUTSIDE LIFEBOATS\",\n      \"prompt\": \"subject_definitions: <MASTER CHIEF> is the towering 7-foot super-soldier in weathered olive-green MJOLNIR Mark V Powered Assault Armor with reflective gold visor, scarred titanium plating, speaking in a calm deep resonant bass with unshakeable stoic discipline and lethal tactical awareness and <SPARTAN> is the cybernetically augmented super-soldier in heavy MJOLNIR powered armor with gold faceplate visor, speaking in a clipped precise military cadence. detailed_description: In INT. PILLAR OF AUTUMN/CORRIDOR OUTSIDE LIFEBOATS, [0.00s-4.60s] Camera establishes int. pillar of autumn/corridor outside lifeboats: LOCKED-OFF REVERSE ANGLE on a COVENANT position. An ELITE, three JACKALS and four GRUNTS -with their backs to us as they fire down the smoke and fire-filled corridor ahead. And suddenly a hail of rounds are coming our way -ripping through the Covenant, dropping and shredding them. Expansive sci-fi starship command bridge with illuminated tactical holo-pedestals and reinforced panoramic viewport. In the background, flight crew officers in naval uniforms man glowing navigational consoles and monitor sensor readouts. [4.60s-9.78s] One last surviving GRUNT, screaming, turns to run towards us -and is shot in the back. Falls. As MASTER CHIEF comes through the haze towards us, we realize we have just seen what it is like to be on the receiving end of a SPARTAN attack. Over his left shoulder, the SPARTAN is carrying a wounded MARINE. [9.78s-14.38s] In his right hand, his assault rifle smokes. Three more MARINES follow behind. CORTANA There's only one lifeboat left. MASTER CHIEF We're on it. Kinetic Dynamic Combat Tracking executed smoothly at 0.4m/s, holding sharp focal plane on the subject, 50mm and 35mm anamorphic prime lens at T1.5, shallow depth of field, motivated cool-cyan holographic displays with deep cobalt window fill and dramatic amber status rim lighting., subtle halation, and rich organic lens flares. Visual rendering: ASTROCINEMAV01K2T, photorealistic 8k cinema fidelity, volumetric shadows, Kodak Vision3 500T color science, natural physical micro-acting. [LoRA Directives: Choreography: combat, martial arts, gun-fu, melee brawl, punch, kick, grapple, judo throw, parry, knife strike; visceral martial arts hand strikes, close-quarters parries, dynamic physical grapples | Kinetic Energy: kinetic velocity, sprint, rapid tackle, dynamic motion, fast tracking push, high-speed movement | Optical Grade: ASTROCINEMAV01K2T, 50mm anamorphic lens, 35mm anamorphic prime lens, motivated tungsten practical lighting, cool window fill, shallow depth of field, fine 35mm grain, subtle halation, controlled highlight rolloff; photorealistic skin pores, subtle skin wrinkles, natural fabric weave texture, natural physical micro-acting.] overall_soundscape: Intimate command bridge room boundary decay (RT60=0.45s), deep 40Hz sub-bass engine turbine hum vibrating through the steel deckplates, rhythmic electronic terminal telemetry chirps, soft ambient air circulation hum, and subtle digital holographic projection buzz. Pristine centered vocal presence with natural acoustic enclosure.\",\n      \"duration_seconds\": 14.375,\n      \"shot_type\": \"Kinetic Dynamic Combat Tracking\",\n      \"mood\": \"High-Octane Action & Combat\",\n      \"recommended_loras\": [\n        {\n          \"file\": \"minimax/MiniMax_H3_Combat_LoRA.safetensors\",\n          \"weight\": 0.8,\n          \"role\": \"Combat Choreography, Martial Arts & Gun-Fu\",\n          \"triggers\": \"combat, martial arts, gun-fu, melee brawl, punch, kick, grapple, judo throw, parry, knife strike\",\n          \"visual_cue\": \"visceral martial arts hand strikes, close-quarters parries, dynamic physical grapples\"\n        },\n        {\n          \"file\": \"minimax/H3_Motion_BoosterV2.safetensors\",\n          \"weight\": 0.6,\n          \"role\": \"Kinetic Velocity & Dynamic Motion\",\n          \"triggers\": \"kinetic velocity, sprint, rapid tackle, dynamic motion, fast tracking push, high-speed movement\",\n          \"visual_cue\": \"explosive physical acceleration, fast camera tracking push, dynamic body momentum\"\n        },\n        {\n          \"file\": \"minimax/CinematicMH3-V01.safetensors\",\n          \"weight\": 0.55,\n          \"role\": \"Master Cinematography & Motivated Film Lighting (Cinema V2)\",\n          \"triggers\": \"ASTROCINEMAV01K2T, 50mm anamorphic lens, 35mm anamorphic prime lens, motivated tungsten practical lighting, cool window fill, shallow depth of field, fine 35mm grain, subtle halation, controlled highlight rolloff\",\n          \"visual_cue\": \"ASTROCINEMAV01K2T: 50mm anamorphic lens, motivated tungsten practical lighting, cool window fill, shallow depth of field, subtle halation and controlled highlight rolloff\"\n        },\n        {\n          \"file\": \"minimax/h3-realism-people-t2v-i2v-r2v.safetensors\",\n          \"weight\": 0.6,\n          \"role\": \"Photorealistic Skin Pores & Fabric Realism\",\n          \"triggers\": \"photorealistic skin pores, subtle skin wrinkles, natural fabric weave texture, natural physical micro-acting\",\n          \"visual_cue\": \"hyper-realistic skin texture, authentic facial pores, natural physical micro-reactions\"\n        }\n      ]\n    },\n    {\n      \"id\": \"Halo_Action_010_02m09s_to_02m23s\",\n      \"title\": \"Halo (2005 - Garland / Bungie) - EXT. HALO/VALLEY/LIFEBOAT -DAY\",\n      \"prompt\": \"subject_definitions: <CORTANA> is the holographic luminous blue female AI entity with sleek digital circuitry flowing across her translucent form, speaking in an articulate calm resonant female tone with playful intelligence and underlying emotional vulnerability and <MASTER CHIEF> is the towering 7-foot super-soldier in weathered olive-green MJOLNIR Mark V Powered Assault Armor with reflective gold visor, scarred titanium plating, speaking in a calm deep resonant bass with unshakeable stoic discipline and lethal tactical awareness. detailed_description: In EXT. HALO/VALLEY/LIFEBOAT -DAY, [0.00s-4.60s] Camera establishes ext. halo/valley/lifeboat -day: The rear hatch of the LIFEBOAT kicks open, and MASTER CHIEF steps out. There is meadow grass beneath his feet. He is in a valley, whose steep sides rise to sheer cathedrallike rock faces. A river runs along the valley floor, then cuts into the bedrock, creating a deep waterfall at the far end. MASTER CHIEF looks skywards, and sees an EXTRAORDINARY sight. Not just the unnatural way in which, either side of their position, the massive interior of HALO curves up in a gradual incline, to rejoin the upper part of the ring a vast distance above ... but also the PILLAR OF AUTUMN. Expansive exterior setting of EXT. HALO/VALLEY/LIFEBOAT -DAY: authentic environmental depth, distant horizon geography, and natural atmospheric haze. In the background, background pedestrians and vehicles move naturally through the distant street space. [4.60s-9.78s] The battle cruiser is on its descent. Trailing a colossal white plume of vapor. A sound like innumerable jet-planes. Distant, yet overwhelming. Behind the PILLAR OF AUTUMN, pursuing it, we can see the shadow shapes of the COVENANT ARMARDA -maintaining a constant barrage of fire at the stricken vessel. From MASTER CHIEF'S position, we track the Pillar of Autumn ... until, many miles distant, further up the curve, seen through a blue atmosphere haze ... Medium close-up tracking shot on <CORTANA> at 04.6s: (in a shock and awe English delivery) speaks: \\\"Oh. Look.\\\", with precise visible lip-sync phoneme articulation and natural jaw movement. Over-the-shoulder reverse angle focusing on <CORTANA> at 07.2s: (in a quiet English delivery) speaks: \\\"She's going down.\\\", with precise visible lip-sync phoneme articulation and natural jaw movement. [9.78s-14.38s] she crash-lands on HALO'S surface. Because of the distance, the sound is delayed by a few seconds, so the impact takes place in SILENCE. And a few seconds after the sound comes a second shockwave, this one physical -a ripple through the actual surface of the ring. until, with a roar of breaking rock and twisting metal, it passes under them. Then is gone. A beat. She breaks off. Then -urgent. Kinetic Dynamic Combat Tracking executed smoothly at 0.4m/s, holding sharp focal plane on the subject, 50mm and 35mm anamorphic prime lens at T1.5, shallow depth of field, motivated natural volumetric golden-hour sunlight with soft directional fill and atmospheric rim lighting highlighting character silhouettes., subtle halation, and rich organic lens flares. Visual rendering: ASTROCINEMAV01K2T, photorealistic 8k cinema fidelity, volumetric shadows, Kodak Vision3 500T color science, natural physical micro-acting. [LoRA Directives: Choreography: combat, martial arts, gun-fu, melee brawl, punch, kick, grapple, judo throw, parry, knife strike; visceral martial arts hand strikes, close-quarters parries, dynamic physical grapples | Kinetic Energy: kinetic velocity, sprint, rapid tackle, dynamic motion, fast tracking push, high-speed movement | Optical Grade: ASTROCINEMAV01K2T, 50mm anamorphic lens, 35mm anamorphic prime lens, motivated tungsten practical lighting, cool window fill, shallow depth of field, fine 35mm grain, subtle halation, controlled highlight rolloff; photorealistic skin pores, subtle skin wrinkles, natural fabric weave texture, natural physical micro-acting.] overall_soundscape: Heavy kinetic combat acoustic dynamics, visceral bone-cracking strikes, rapid air swishes, cloth rustling dynamically during maneuvers, sharp weapon slide clicks, heavy tactical boot footsteps, and deep 45Hz sub-bass punch impact resonance. Centered English dialogue presence: at 04.6s, <CORTANA>'s centered speech is prioritized with crystal clarity, followed by at 07.2s, <CORTANA>'s centered speech is prioritized with crystal clarity without background acoustic clipping.\",\n      \"duration_seconds\": 14.375,\n      \"shot_type\": \"Kinetic Dynamic Combat Tracking\",\n      \"mood\": \"High-Octane Action & Combat\",\n      \"recommended_loras\": [\n        {\n          \"file\": \"minimax/MiniMax_H3_Combat_LoRA.safetensors\",\n          \"weight\": 0.8,\n          \"role\": \"Combat Choreography, Martial Arts & Gun-Fu\",\n          \"triggers\": \"combat, martial arts, gun-fu, melee brawl, punch, kick, grapple, judo throw, parry, knife strike\",\n          \"visual_cue\": \"visceral martial arts hand strikes, close-quarters parries, dynamic physical grapples\"\n        },\n        {\n          \"file\": \"minimax/H3_Motion_BoosterV2.safetensors\",\n          \"weight\": 0.6,\n          \"role\": \"Kinetic Velocity & Dynamic Motion\",\n          \"triggers\": \"kinetic velocity, sprint, rapid tackle, dynamic motion, fast tracking push, high-speed movement\",\n          \"visual_cue\": \"explosive physical acceleration, fast camera tracking push, dynamic body momentum\"\n        },\n        {\n          \"file\": \"minimax/CinematicMH3-V01.safetensors\",\n          \"weight\": 0.55,\n          \"role\": \"Master Cinematography & Motivated Film Lighting (Cinema V2)\",\n          \"triggers\": \"ASTROCINEMAV01K2T, 50mm anamorphic lens, 35mm anamorphic prime lens, motivated tungsten practical lighting, cool window fill, shallow depth of field, fine 35mm grain, subtle halation, controlled highlight rolloff\",\n          \"visual_cue\": \"ASTROCINEMAV01K2T: 50mm anamorphic lens, motivated tungsten practical lighting, cool window fill, shallow depth of field, subtle halation and controlled highlight rolloff\"\n        },\n        {\n          \"file\": \"minimax/h3-realism-people-t2v-i2v-r2v.safetensors\",\n          \"weight\": 0.6,\n          \"role\": \"Photorealistic Skin Pores & Fabric Realism\",\n          \"triggers\": \"photorealistic skin pores, subtle skin wrinkles, natural fabric weave texture, natural physical micro-acting\",\n          \"visual_cue\": \"hyper-realistic skin texture, authentic facial pores, natural physical micro-reactions\"\n        }\n      ]\n    }\n  ]\n}",
+        "active_scene_id": "scene_01"
+      }
+    },
+    {
+      "id": 2001,
+      "type": "LoadImage",
+      "pos": [
+        40,
+        720
+      ],
+      "size": [
+        320,
+        314
+      ],
+      "flags": {},
+      "order": 3,
+      "mode": 0,
+      "inputs": [
+        {
+          "localized_name": "image",
+          "name": "image",
+          "type": "COMBO",
+          "widget": {
+            "name": "image"
+          },
+          "link": null
+        },
+        {
+          "localized_name": "choose file to upload",
+          "name": "upload",
+          "type": "IMAGEUPLOAD",
+          "widget": {
+            "name": "upload"
+          },
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "localized_name": "IMAGE",
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "slot_index": 0,
+          "links": [
+            21
+          ]
+        },
+        {
+          "localized_name": "MASK",
+          "name": "MASK",
+          "type": "MASK",
+          "slot_index": 1,
+          "links": null
+        }
+      ],
+      "title": "\ud83d\udc64 Lead Character A (@char1)",
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.33.0",
+        "Node name for S&R": "LoadImage",
+        "ue_properties": {
+          "widget_ue_connectable": {},
+          "version": "7.8",
+          "input_ue_unconnectable": {}
+        }
+      },
+      "widgets_values": [
+        "MV5BNDVjMDIyMTUtNmI0Ni00MjhkLWJhNzQtZDUwMzYzOGEzYjNiXkEyXkFqcGc@._V1_FMjpg_UX1000_ (1).jpg",
+        "image"
+      ],
+      "widgets_values_named": {
+        "image": "MV5BNDVjMDIyMTUtNmI0Ni00MjhkLWJhNzQtZDUwMzYzOGEzYjNiXkEyXkFqcGc@._V1_FMjpg_UX1000_ (1).jpg",
+        "upload": "image"
+      }
+    },
+    {
+      "id": 2002,
+      "type": "LoadImage",
+      "pos": [
+        40,
+        1070
+      ],
+      "size": [
+        320,
+        314
+      ],
+      "flags": {},
+      "order": 4,
+      "mode": 0,
+      "inputs": [
+        {
+          "localized_name": "image",
+          "name": "image",
+          "type": "COMBO",
+          "widget": {
+            "name": "image"
+          },
+          "link": null
+        },
+        {
+          "localized_name": "choose file to upload",
+          "name": "upload",
+          "type": "IMAGEUPLOAD",
+          "widget": {
+            "name": "upload"
+          },
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "localized_name": "IMAGE",
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "slot_index": 0,
+          "links": [
+            22
+          ]
+        },
+        {
+          "localized_name": "MASK",
+          "name": "MASK",
+          "type": "MASK",
+          "slot_index": 1,
+          "links": null
+        }
+      ],
+      "title": "\ud83d\udc64 Lead Character B (@char2)",
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.33.0",
+        "Node name for S&R": "LoadImage",
+        "ue_properties": {
+          "widget_ue_connectable": {},
+          "version": "7.8",
+          "input_ue_unconnectable": {}
+        }
+      },
+      "widgets_values": [
+        "MV5BNDVjMDIyMTUtNmI0Ni00MjhkLWJhNzQtZDUwMzYzOGEzYjNiXkEyXkFqcGc@._V1_FMjpg_UX1000_ (1).jpg",
+        "image"
+      ],
+      "widgets_values_named": {
+        "image": "MV5BNDVjMDIyMTUtNmI0Ni00MjhkLWJhNzQtZDUwMzYzOGEzYjNiXkEyXkFqcGc@._V1_FMjpg_UX1000_ (1).jpg",
+        "upload": "image"
+      }
+    },
+    {
+      "id": 4,
+      "type": "VAELoader",
+      "pos": [
+        40,
+        540
+      ],
+      "size": [
+        440,
+        60
+      ],
+      "flags": {},
+      "order": 5,
+      "mode": 0,
+      "inputs": [
+        {
+          "localized_name": "vae_name",
+          "name": "vae_name",
+          "type": "COMBO",
+          "widget": {
+            "name": "vae_name"
+          },
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "localized_name": "VAE",
+          "name": "VAE",
+          "type": "VAE",
+          "slot_index": 0,
+          "links": [
+            6
+          ]
+        }
+      ],
+      "title": "\ud83d\udd0a MiniMax H3 Stereo Audio VAE (FP32)",
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.33.0",
+        "Node name for S&R": "VAELoader",
+        "ue_properties": {
+          "widget_ue_connectable": {},
+          "version": "7.8",
+          "input_ue_unconnectable": {}
+        }
+      },
+      "widgets_values": [
+        "minimax_h3_audio_vae_bf16.safetensors"
+      ],
+      "widgets_values_named": {
+        "vae_name": "minimax_h3_audio_vae_bf16.safetensors"
+      },
+      "ndSuperSelectorEnabled": false,
+      "ndPowerEnabled": false
+    },
+    {
+      "id": 20,
+      "type": "MiniMaxH3ImageToVideo",
+      "pos": [
+        1585.972057443402,
+        -28.896887554066353
+      ],
+      "size": [
+        461.7043518066406,
+        360
+      ],
+      "flags": {},
+      "order": 10,
+      "mode": 0,
+      "inputs": [
+        {
+          "localized_name": "clip",
+          "name": "clip",
+          "type": "CLIP",
+          "link": 51
+        },
+        {
+          "localized_name": "vae",
+          "name": "vae",
+          "type": "VAE",
+          "link": 3
+        },
+        {
+          "localized_name": "first_frame",
+          "name": "first_frame",
+          "shape": 7,
+          "type": "IMAGE",
+          "link": null
+        },
+        {
+          "localized_name": "last_frame",
+          "name": "last_frame",
+          "shape": 7,
+          "type": "IMAGE",
+          "link": null
+        },
+        {
+          "localized_name": "prompt",
+          "name": "prompt",
+          "type": "STRING",
+          "widget": {
+            "name": "prompt"
+          },
+          "link": 15
+        },
+        {
+          "localized_name": "width",
+          "name": "width",
+          "type": "INT",
+          "widget": {
+            "name": "width"
+          },
+          "link": null
+        },
+        {
+          "localized_name": "height",
+          "name": "height",
+          "type": "INT",
+          "widget": {
+            "name": "height"
+          },
+          "link": null
+        },
+        {
+          "localized_name": "length",
+          "name": "length",
+          "type": "INT",
+          "widget": {
+            "name": "length"
+          },
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "localized_name": "positive",
+          "name": "positive",
+          "type": "CONDITIONING",
+          "slot_index": 0,
+          "links": [
+            4
+          ]
+        },
+        {
+          "localized_name": "LATENT",
+          "name": "LATENT",
+          "type": "LATENT",
+          "slot_index": 1,
+          "links": [
+            7
+          ]
+        }
+      ],
+      "title": "\ud83d\udcd0 MiniMax H3 Latent & Conditioning Engine (1376x768 x 192f)",
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.33.0",
+        "Node name for S&R": "MiniMaxH3ImageToVideo",
+        "ue_properties": {
+          "widget_ue_connectable": {
+            "prompt": true
+          },
+          "version": "7.8",
+          "input_ue_unconnectable": {}
+        }
+      },
+      "widgets_values": [
+        "",
+        1376,
+        768,
+        192
+      ],
+      "widgets_values_named": {
+        "prompt": "",
+        "width": 1376,
+        "height": 768,
+        "length": 192
+      }
+    },
+    {
+      "id": 2005,
+      "type": "H3ClipLoaderAny",
+      "pos": [
+        54.93433167402776,
+        290.9968963802789
+      ],
+      "size": [
+        377.6346340167679,
+        106
+      ],
+      "flags": {},
+      "order": 7,
+      "mode": 0,
+      "inputs": [
+        {
+          "localized_name": "clip_name",
+          "name": "clip_name",
+          "type": "COMBO",
+          "widget": {
+            "name": "clip_name"
+          },
+          "link": null
+        },
+        {
+          "localized_name": "type",
+          "name": "type",
+          "type": "COMBO",
+          "widget": {
+            "name": "type"
+          },
+          "link": null
+        },
+        {
+          "localized_name": "mmproj_name",
+          "name": "mmproj_name",
+          "shape": 7,
+          "type": "COMBO",
+          "widget": {
+            "name": "mmproj_name"
+          },
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "localized_name": "CLIP",
+          "name": "CLIP",
+          "type": "CLIP",
+          "links": [
+            51
+          ]
+        }
+      ],
+      "properties": {
+        "ue_properties": {
+          "widget_ue_connectable": {},
+          "input_ue_unconnectable": {}
+        },
+        "cnr_id": "comfyui-workflow-encrypt",
+        "ver": "1.0.0",
+        "Node name for S&R": "H3ClipLoaderAny"
+      },
+      "widgets_values": [
+        "Qwen3-VL-4B-Instruct-Q4_K_M.gguf",
+        "minimax",
+        "Qwen3-VL-4B-mmproj-F16.gguf"
+      ],
+      "widgets_values_named": {
+        "clip_name": "Qwen3-VL-4B-Instruct-Q4_K_M.gguf",
+        "type": "minimax",
+        "mmproj_name": "Qwen3-VL-4B-mmproj-F16.gguf"
+      },
+      "ndSuperSelectorEnabled": false,
+      "ndPowerEnabled": false
+    },
+    {
+      "id": 1,
+      "type": "RAVENModelLoader",
+      "pos": [
+        41.61120267669028,
+        133.83548068344368
+      ],
+      "size": [
+        447.25047618023416,
+        107.11031445134972
+      ],
+      "flags": {},
+      "order": 6,
+      "mode": 0,
+      "inputs": [
+        {
+          "localized_name": "unet_name",
+          "name": "unet_name",
+          "type": "COMBO",
+          "widget": {
+            "name": "unet_name"
+          },
+          "link": null
+        },
+        {
+          "localized_name": "lora_name",
+          "name": "lora_name",
+          "type": "COMBO",
+          "widget": {
+            "name": "lora_name"
+          },
+          "link": null
+        },
+        {
+          "localized_name": "weight_dtype",
+          "name": "weight_dtype",
+          "type": "COMBO",
+          "widget": {
+            "name": "weight_dtype"
+          },
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "localized_name": "MODEL",
+          "name": "MODEL",
+          "type": "MODEL",
+          "slot_index": 0,
+          "links": [
+            1
+          ]
+        }
+      ],
+      "title": "\ud83e\udde0 RAVEN Universal Model Loader (Auto-Patch & GGUF)",
+      "properties": {
+        "cnr_id": "comfyui-workflow-encrypt",
+        "ver": "1.0.0",
+        "Node name for S&R": "RAVENModelLoader",
+        "ue_properties": {
+          "widget_ue_connectable": {},
+          "version": "7.8",
+          "input_ue_unconnectable": {}
+        }
+      },
+      "widgets_values": [
+        "MiniMax-H3-FL2VA-Q4_K_M.gguf",
+        "minimax_h3_raven_streaming_lora_4nfe_preview.safetensors",
+        "default"
+      ],
+      "widgets_values_named": {
+        "unet_name": "MiniMax-H3-FL2VA-Q4_K_M.gguf",
+        "lora_name": "minimax_h3_raven_streaming_lora_4nfe_preview.safetensors",
+        "weight_dtype": "default"
+      },
+      "ndSuperSelectorEnabled": false,
+      "ndPowerEnabled": false
     }
   ],
   "links": [
@@ -883,14 +1675,6 @@
       30,
       0,
       "MODEL"
-    ],
-    [
-      2,
-      2,
-      0,
-      20,
-      0,
-      "CLIP"
     ],
     [
       3,
@@ -921,7 +1705,7 @@
       15,
       0,
       20,
-      2,
+      4,
       "STRING"
     ],
     [
@@ -1011,10 +1795,19 @@
       61,
       0,
       "AUDIO"
+    ],
+    [
+      51,
+      2005,
+      0,
+      20,
+      0,
+      "CLIP"
     ]
   ],
   "groups": [
     {
+      "id": 1,
       "title": "\ud83e\udde0 1. Model & LoRA Ingestion (Universal Loader + Power LoRAs)",
       "bounding": [
         20,
@@ -1023,9 +1816,10 @@
         600
       ],
       "color": "#3f4e2f",
-      "font_size": 24
+      "flags": {}
     },
     {
+      "id": 2,
       "title": "\ud83c\udfad 2. Character Reference Deck (@char1 / @char2)",
       "bounding": [
         20,
@@ -1034,9 +1828,10 @@
         760
       ],
       "color": "#523f2f",
-      "font_size": 24
+      "flags": {}
     },
     {
+      "id": 3,
       "title": "\ud83c\udfac 3. Timeline Director & Latent Framing",
       "bounding": [
         1040,
@@ -1045,9 +1840,10 @@
         640
       ],
       "color": "#2f3f52",
-      "font_size": 24
+      "flags": {}
     },
     {
+      "id": 4,
       "title": "\u26a1 4. High-Velocity Diffusion Sampling Engine (SageAttention 2.2 + Vault)",
       "bounding": [
         2040,
@@ -1056,9 +1852,10 @@
         640
       ],
       "color": "#522f4e",
-      "font_size": 24
+      "flags": {}
     },
     {
+      "id": 5,
       "title": "\ud83d\udce1 5. Live Broadcast, Muxing & Delivery",
       "bounding": [
         2510,
@@ -1067,9 +1864,10 @@
         1040
       ],
       "color": "#2f524e",
-      "font_size": 24
+      "flags": {}
     },
     {
+      "id": 6,
       "title": "\ud83d\udcd8 6. Operational Production Guide",
       "bounding": [
         1040,
@@ -1078,18 +1876,37 @@
         440
       ],
       "color": "#253342",
-      "font_size": 24
+      "flags": {}
     }
   ],
   "config": {},
   "extra": {
     "ds": {
-      "scale": 0.65,
+      "scale": 0.9516650000000004,
       "offset": [
-        -20,
-        20
+        533.9633251424135,
+        443.0149205015968
       ]
-    }
+    },
+    "ue_links": [],
+    "linkExtensions": [
+      {
+        "id": 51,
+        "parentId": 1
+      }
+    ],
+    "reroutes": [
+      {
+        "id": 1,
+        "pos": [
+          1006.9010562860555,
+          -11.26307968971221
+        ],
+        "linkIds": [
+          51
+        ]
+      }
+    ]
   },
   "version": 0.4
 }

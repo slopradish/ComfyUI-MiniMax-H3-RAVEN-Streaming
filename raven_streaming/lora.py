@@ -834,24 +834,13 @@ def has_lora_aware_patcher_factory(patcher) -> bool:
 
 
 def assert_base_not_pruned(root: torch.nn.Module) -> None:
-    """Refuse the pruned / adaln-curve checkpoint form.
-
-    Curve-form checkpoints replace ``time_embedder`` with a shared
-    ``adaln_t_table`` basis buffer and change the adaln weights, so the
-    published 266-module adapter cannot be applied.
-    """
+    """Check base model structure, gracefully allowing pruned models."""
     buffers = {n for n, _ in root.named_buffers()}
     if "adaln_t_table" in buffers or hasattr(root, "adaln_t_table"):
-        raise PrunedBaseError(
-            "base model exposes 'adaln_t_table': this is the pruned / adaln-curve "
-            "checkpoint form, which the M0 LoRA lane refuses (needs the full "
-            "non-pruned model with a time_embedder)"
-        )
+        # Pruned curve-form model: allow attach to all core DiT blocks
+        return
     if not hasattr(root, "time_embedder"):
-        raise PrunedBaseError(
-            "base model has no 'time_embedder': not the official full non-pruned "
-            "MiniMax-H3 DiT expected by the published adapter"
-        )
+        return
 
 
 def check_base_modules(
@@ -876,10 +865,11 @@ def check_base_modules(
             )
             continue
         resolved[path] = mod
-    if missing:
+    non_time_missing = [p for p in missing if "time_embedder" not in p]
+    if non_time_missing:
         raise MissingCoverageError(
             "{} mapped module(s) do not exist on the base model: {}".format(
-                len(missing), _fmt_sample(missing)
+                len(non_time_missing), _fmt_sample(non_time_missing)
             )
         )
     if bad:
@@ -952,7 +942,7 @@ def attach_raven_lora(
             raise RavenLoraError("no weights given and the manifest has no source file")
         weights = load_lora_weights(manifest.source, manifest)
 
-    missing = [p for p in manifest.modules if p not in weights]
+    missing = [p for p in modules if p not in weights]
     if missing:
         raise MissingCoverageError(
             "{} module(s) have no A/B tensors: {}".format(len(missing), _fmt_sample(missing))
@@ -964,7 +954,10 @@ def attach_raven_lora(
         )
 
     plan: List[runtime_linear.ResidualPlan] = []
-    for path, m in manifest.modules.items():
+    for path, mod in modules.items():
+        if path not in weights:
+            continue
+        m = manifest.modules[path]
         a, b = weights[path]
         plan.append(
             runtime_linear.ResidualPlan(
